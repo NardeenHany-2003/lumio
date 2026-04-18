@@ -1,375 +1,318 @@
-# 💡 Lumio — Online Learning Platform
+# Lumio — Online Learning Platform
 
-> A full-stack online learning platform where instructors create courses and students enroll in them. Built with Node.js, Express, MongoDB, Pug, and JWT authentication.
+A full-stack online learning platform where instructors create and publish courses, and students enroll, track progress, and leave reviews. Built with Node.js, Express, MongoDB, Pug, and JWT authentication.
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Local Setup](#local-setup)
-  - [Docker Setup](#docker-setup)
 - [Environment Variables](#environment-variables)
-- [API Overview](#api-overview)
-- [Running Tests](#running-tests)
-- [API Documentation](#api-documentation)
+- [How to Use the Website](#how-to-use-the-website)
+- [API Reference](#api-reference)
+- [Security](#security)
 
 ---
 
-## ✨ Features
+## Features
 
-### Core
-- 🔐 JWT authentication with **access token (1h)** + **refresh token (30d)**
-- 👥 Role-based access control: **Student**, **Instructor**, **Admin**
-- 📚 Instructors can create, publish, and manage courses
-- 🎓 Students can enroll in and unenroll from published courses
-- 📝 Students can comment on lessons they are enrolled in
-- ⭐ Students can rate and review courses they are enrolled in
+### Authentication & Users
 
-### Extra Features
-- 📊 **Lesson progress tracking** — per-lesson completion, auto-calculates enrollment `progressPercent`
-- 🔍 **Search & filter courses** — by category, level, price, rating; full-text search on title/description/tags
-- 📄 **Pagination** — page-based on all list endpoints (`?page=1&limit=10`)
-- 🗂️ **Course categories** — Web Development, Mobile Development, Data Science & ML, DevOps & Cloud, Cybersecurity, AI & Machine Learning, Game Development, Blockchain, Database, Programming Languages
-
-### Bonus
-- 📖 **Swagger / OpenAPI docs** at `/api-docs`
-- 🧪 **Jest integration tests** for auth and course flows
-- 🐳 **Docker** — multi-stage `Dockerfile` + `docker-compose.yml` with MongoDB and Mongo Express
-- 🛡️ **Security middleware** — Helmet, CORS, rate limiting (global + stricter auth limiter), HPP, NoSQL injection sanitization, compression
-- 📈 **MongoDB aggregation** — course stats by category (`GET /api/v1/courses/stats`)
-
----
-
-## 🛠 Tech Stack
-
-| Layer       | Technology                                         |
-|-------------|----------------------------------------------------|
-| Runtime     | Node.js 20 (ESM / `"type": "module"`)             |
-| Framework   | Express 4                                          |
-| Database    | MongoDB 7 + Mongoose 8                             |
-| Auth        | JWT (access + refresh), bcryptjs, cookie-parser    |
-| Validation  | express-validator                                  |
-| View Engine | Pug 3                                              |
-| Security    | Helmet, express-mongo-sanitize, hpp, express-rate-limit |
-| Docs        | Swagger UI (swagger-jsdoc + swagger-ui-express)    |
-| Testing     | Jest + Supertest                                   |
-| DevOps      | Docker, docker-compose                             |
-
----
-
-## 🗂 Project Structure
-
-```
-lumio/
-├── server.js                    # Entry point
-├── config/
-│   └── swagger.js               # OpenAPI spec
-├── src/
-│   ├── app.js                   # Express app setup
-│   ├── controllers/             # Route handlers
-│   │   ├── authController.js
-│   │   ├── courseController.js
-│   │   ├── lessonController.js
-│   │   ├── enrollmentController.js
-│   │   ├── commentController.js
-│   │   ├── ratingController.js
-│   │   └── progressController.js
-│   ├── models/                  # Mongoose models
-│   │   ├── userModel.js
-│   │   ├── courseModel.js
-│   │   ├── lessonModel.js
-│   │   ├── enrollmentModel.js
-│   │   ├── commentModel.js
-│   │   ├── ratingModel.js
-│   │   └── progressModel.js
-│   ├── routes/                  # Express routers
-│   │   ├── authRoutes.js
-│   │   ├── courseRoutes.js
-│   │   ├── lessonRoutes.js
-│   │   ├── enrollmentRoutes.js
-│   │   ├── commentRoutes.js
-│   │   ├── ratingRoutes.js
-│   │   ├── progressRoutes.js
-│   │   └── viewRoutes.js
-│   ├── middleware/
-│   │   ├── authMiddleware.js    # protect, restrictTo, isLoggedIn
-│   │   ├── errorMiddleware.js   # Global error handler
-│   │   └── validateMiddleware.js
-│   ├── validators/
-│   │   ├── authValidators.js
-│   │   ├── courseValidators.js
-│   │   └── resourceValidators.js
-│   ├── utils/
-│   │   ├── appError.js          # Custom error class
-│   │   ├── catchAsync.js        # Async wrapper
-│   │   ├── apiFeatures.js       # Filter/sort/search/paginate
-│   │   └── generateTokens.js   # JWT helpers
-│   ├── views/                   # Pug templates
-│   │   ├── base.pug
-│   │   ├── home.pug
-│   │   ├── courses.pug
-│   │   ├── courseDetail.pug
-│   │   ├── login.pug
-│   │   ├── signup.pug
-│   │   ├── dashboard.pug
-│   │   ├── error.pug
-│   │   └── partials/
-│   │       ├── nav.pug
-│   │       ├── footer.pug
-│   │       └── courseCard.pug
-│   └── public/
-│       ├── css/main.css
-│       └── js/
-│           ├── main.js
-│           ├── courses.js
-│           ├── courseDetail.js
-│           └── dashboard.js
-├── tests/
-│   ├── helpers/dbHelper.js
-│   ├── auth.test.js
-│   └── courses.test.js
-├── .env.example
-├── .gitignore
-├── Dockerfile
-├── docker-compose.yml
-└── package.json
-```
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- **Node.js** v20+
-- **MongoDB** v6+ (local) or Docker
-
----
-
-### Local Setup
-
-**1. Clone the repository**
-```bash
-git clone https://github.com/your-username/lumio.git
-cd lumio
-```
-
-**2. Install dependencies**
-```bash
-npm install
-```
-
-**3. Set up environment variables**
-```bash
-cp .env.example .env
-```
-Then open `.env` and fill in your values (see [Environment Variables](#environment-variables) below).
-
-**4. Start MongoDB**
-
-Make sure MongoDB is running locally on port `27017`, or update `MONGODB_URI` in `.env`.
-
-**5. Run in development mode**
-```bash
-npm run dev
-```
-
-The server starts at **http://localhost:3000**
-API docs are at **http://localhost:3000/api-docs**
-
----
-
-### Docker Setup
-
-> The easiest way to run Lumio with zero local dependencies.
-
-**1. Set required secrets in your shell** (or create a `.env` file):
-```bash
-export JWT_ACCESS_SECRET=your_super_secret_access_key_here
-export JWT_REFRESH_SECRET=your_super_secret_refresh_key_here
-```
-
-**2. Start everything**
-```bash
-docker-compose up --build
-```
-
-| Service       | URL                          |
-|---------------|------------------------------|
-| Lumio App     | http://localhost:3000        |
-| API Docs      | http://localhost:3000/api-docs |
-| Mongo Express | http://localhost:8081        |
-
-**3. Stop**
-```bash
-docker-compose down
-```
-
-**Tear down including volumes:**
-```bash
-docker-compose down -v
-```
-
----
-
-## 🔧 Environment Variables
-
-Copy `.env.example` to `.env` and configure:
-
-| Variable                 | Description                              | Default          |
-|--------------------------|------------------------------------------|------------------|
-| `NODE_ENV`               | `development` / `production` / `test`    | `development`    |
-| `PORT`                   | Server port                              | `3000`           |
-| `MONGODB_URI`            | MongoDB connection string                | —                |
-| `JWT_ACCESS_SECRET`      | Secret for signing access tokens         | —                |
-| `JWT_ACCESS_EXPIRES_IN`  | Access token lifetime                    | `1h`             |
-| `JWT_REFRESH_SECRET`     | Secret for signing refresh tokens        | —                |
-| `JWT_REFRESH_EXPIRES_IN` | Refresh token lifetime                   | `30d`            |
-| `JWT_COOKIE_EXPIRES_IN`  | Cookie expiry in days                    | `30`             |
-| `RATE_LIMIT_WINDOW_MS`   | Rate limit window in ms                  | `900000` (15min) |
-| `RATE_LIMIT_MAX`         | Max requests per window                  | `100`            |
-
----
-
-## 📡 API Overview
-
-All API endpoints are prefixed with `/api/v1`.
-
-### Authentication
-
-| Method | Endpoint                        | Access  | Description                  |
-|--------|---------------------------------|---------|------------------------------|
-| POST   | `/auth/signup`                  | Public  | Register a new user           |
-| POST   | `/auth/login`                   | Public  | Log in, receive tokens        |
-| POST   | `/auth/logout`                  | Auth    | Revoke refresh token          |
-| POST   | `/auth/refresh-token`           | Public  | Exchange refresh for new pair |
-| POST   | `/auth/forgot-password`         | Public  | Generate password reset token |
-| PATCH  | `/auth/reset-password/:token`   | Public  | Reset password with token     |
-| GET    | `/auth/me`                      | Auth    | Get current user              |
-| PATCH  | `/auth/update-me`               | Auth    | Update name/email/bio         |
-| PATCH  | `/auth/update-password`         | Auth    | Change password               |
-| DELETE | `/auth/delete-me`               | Auth    | Soft-delete account           |
+- JWT authentication with **access token (1 hour)** + **refresh token (30 days)**
+- Role-based access control: **Student**, **Instructor**, **Admin**
+- Email verification flow: forgot password → reset via emailed link (Gmail)
+- Soft-delete account (sets `active: false`, data preserved)
+- Profile photo upload via Multer
 
 ### Courses
 
-| Method | Endpoint                        | Access        | Description                   |
-|--------|---------------------------------|---------------|-------------------------------|
-| GET    | `/courses`                      | Public        | List published courses (filter/search/paginate) |
-| GET    | `/courses/top-5`                | Public        | Top 5 courses by rating       |
-| GET    | `/courses/stats`                | Instructor+   | Aggregated stats by category  |
-| GET    | `/courses/my`                   | Instructor    | Instructor's own courses      |
-| GET    | `/courses/:id`                  | Public        | Get single course (by ID or slug) |
-| POST   | `/courses`                      | Instructor    | Create a course               |
-| PATCH  | `/courses/:id`                  | Instructor    | Update a course               |
-| DELETE | `/courses/:id`                  | Instructor    | Delete a course               |
-| PATCH  | `/courses/:id/publish`          | Instructor    | Publish a course              |
-| PATCH  | `/courses/:id/unpublish`        | Instructor    | Unpublish a course            |
+- Instructors can create, edit, publish, and unpublish courses
+- Course thumbnail image upload
+- Categories: Web Development, Mobile Development, Data Science & ML, DevOps & Cloud, Cybersecurity, Game Development, AI & Machine Learning, Blockchain, Database, Programming Languages
+- Levels: Beginner, Intermediate, Advanced, All Levels
+- Full-text search on title, description, and tags
+- Filter by category, level, and price range
+- Sort, paginate, and limit fields on all list endpoints
 
 ### Lessons
 
-| Method | Endpoint                              | Access     | Description              |
-|--------|---------------------------------------|------------|--------------------------|
-| GET    | `/courses/:courseId/lessons`          | Public     | List lessons for a course |
-| GET    | `/lessons/:id`                        | Public     | Get a single lesson       |
-| POST   | `/lessons`                            | Instructor | Create a lesson           |
-| PATCH  | `/lessons/:id`                        | Instructor | Update a lesson           |
-| DELETE | `/lessons/:id`                        | Instructor | Delete a lesson           |
+- Video upload (MP4, WebM, MOV up to 500MB)
+- Free preview flag — non-enrolled users can watch free lessons
+- Custom HTML5 video player with keyboard shortcuts
 
-### Enrollments
+### Enrollments & Payments
 
-| Method | Endpoint                                    | Access     | Description                   |
-|--------|---------------------------------------------|------------|-------------------------------|
-| GET    | `/enrollments/my`                           | Student    | My enrolled courses           |
-| GET    | `/courses/:courseId/enrollments`            | Instructor | Students enrolled in course   |
-| GET    | `/courses/:courseId/enrollments/check`      | Auth       | Check enrollment status       |
-| POST   | `/courses/:courseId/enrollments`            | Student    | Enroll in a course            |
-| DELETE | `/courses/:courseId/enrollments`            | Student    | Unenroll from a course        |
+- Free courses: direct enrollment with one click
+- Paid courses: Stripe Checkout integration (hosted payment page)
+- Webhook-based enrollment creation after successful payment
+- Booking record created for every paid enrollment (audit trail)
 
-### Comments
+### Learning Experience
 
-| Method | Endpoint                        | Access  | Description             |
-|--------|---------------------------------|---------|-------------------------|
-| GET    | `/comments/:lessonId/comments`  | Public  | Get comments for lesson |
-| POST   | `/comments`                     | Auth    | Post a comment          |
-| PATCH  | `/comments/:id`                 | Auth    | Edit own comment        |
-| DELETE | `/comments/:id`                 | Auth    | Delete own comment      |
+- Per-lesson progress tracking (mark complete — one-way)
+- Overall course `progressPercent` auto-calculated on each lesson completion
+- "Continue Learning" button goes to first incomplete lesson
+- Course completion state shown when all lessons are done
 
-### Ratings
+### Social
 
-| Method | Endpoint                             | Access  | Description              |
-|--------|--------------------------------------|---------|--------------------------|
-| GET    | `/courses/:courseId/ratings`         | Public  | Get course ratings        |
-| POST   | `/courses/:courseId/ratings`         | Student | Rate a course            |
-| PATCH  | `/ratings/:id`                       | Student | Update own rating        |
-| DELETE | `/ratings/:id`                       | Auth    | Delete a rating          |
-
-### Progress
-
-| Method | Endpoint                             | Access  | Description                    |
-|--------|--------------------------------------|---------|--------------------------------|
-| GET    | `/progress/courses/:courseId`        | Student | Get course progress summary    |
-| GET    | `/progress/lessons/:lessonId`        | Student | Get single lesson progress     |
-| PATCH  | `/progress/lessons/:lessonId`        | Student | Mark lesson complete/incomplete |
+- Comments on lessons (enrolled students only)
+- 1–5 star ratings with written reviews (enrolled students only)
+- Average rating auto-recalculated on create/update/delete
 
 ---
 
-### Query Parameters (Courses)
+## Tech Stack
 
-| Param              | Example                          | Description                    |
-|--------------------|----------------------------------|--------------------------------|
-| `search`           | `?search=node`                   | Full-text search               |
-| `category`         | `?category=Web Development`      | Filter by category             |
-| `level`            | `?level=Beginner`                | Filter by difficulty           |
-| `price[lte]`       | `?price[lte]=50`                 | Max price                      |
-| `price`            | `?price=0`                       | Free courses only              |
-| `ratingsAverage[gte]` | `?ratingsAverage[gte]=4`      | Min rating                     |
-| `sort`             | `?sort=-ratingsAverage`          | Sort field(s)                  |
-| `page`             | `?page=2`                        | Page number (default: 1)       |
-| `limit`            | `?limit=12`                      | Results per page (default: 10) |
-| `fields`           | `?fields=title,price`            | Select specific fields         |
+| Layer        | Technology                                                    |
+| ------------ | ------------------------------------------------------------- |
+| Runtime      | Node.js 20+ (ESM)                                             |
+| Framework    | Express 4                                                     |
+| Database     | MongoDB + Mongoose 8                                          |
+| Templating   | Pug 3                                                         |
+| Auth         | JWT (access + refresh), bcryptjs                              |
+| Email        | Nodemailer + Gmail App Password                               |
+| Payments     | Stripe Checkout                                               |
+| File Uploads | Multer                                                        |
+| Validation   | express-validator                                             |
+| Security     | Helmet, CORS, express-rate-limit, HPP, express-mongo-sanitize |
+| API Docs     | Swagger UI at `/api-docs`                                     |
 
 ---
 
-## 🧪 Running Tests
+## Project Structure
+
+```
+lumio/
+├── server.js                   # Entry point — connects DB, starts server
+├── src/
+│   ├── app.js                  # Express app setup — middleware, routes
+│   ├── controllers/            # Route handlers (business logic)
+│   │   ├── authController.js   # signup, login, logout, forgot/reset password
+│   │   ├── userController.js   # getMe, updateMe, deleteMe, admin CRUD
+│   │   ├── courseController.js # CRUD, publish/unpublish, stats
+│   │   ├── lessonController.js # CRUD, access control
+│   │   ├── enrollmentController.js
+│   │   ├── commentController.js
+│   │   ├── ratingController.js
+│   │   ├── progressController.js
+│   │   ├── paymentController.js  # Stripe checkout + webhook
+│   │   └── viewController.js   # Pug page renders
+│   ├── middleware/
+│   │   ├── authMiddleware.js   # protect, isLoggedIn, restrictTo
+│   │   ├── uploadMiddleware.js # Multer — photo, thumbnail, video
+│   │   ├── validateMiddleware.js
+│   │   └── resource/           # Per-resource ownership middleware // this foler was deleted and the files inside it are in the middlware fodlder directly
+│   │       ├── courseMiddleware.js
+│   │       ├── lessonMiddleware.js
+│   │       ├── commentMiddleware.js
+│   │       └── ratingMiddleware.js
+│   ├── models/                 # Mongoose schemas
+│   ├── routes/                 # Express routers
+│   ├── utils/
+│   │   ├── handlerFactory.js   # Generic CRUD (Jonas-style)
+│   │   ├── apiFeatures.js      # filter, search, sort, paginate
+│   │   ├── catchAsync.js
+│   │   ├── appError.js
+│   │   ├── email.js            # Email class — Gmail via Nodemailer
+│   │   └── generateTokens.js
+│   ├── validators/
+│   └── views/                  # Pug templates + email templates
+├── postman/                    # Postman collection (all endpoints)
+└── config/                     # Swagger config
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- MongoDB (local or Atlas)
+- A Gmail account with App Password enabled
+- A Stripe account (for paid course checkout)
+
+### Installation
 
 ```bash
-# Run all tests
-npm test
+# Clone the repository
+git clone https://github.com/your-username/lumio.git
+cd lumio
 
-# Watch mode
-npm run test:watch
+# Install dependencies
+npm install
+
+# Create your environment file
+cp .env.example .env
+# Fill in your values (see Environment Variables below)
+
+# Start development server
+npm run dev
+# or
+node server.js
 ```
 
-> Tests use a separate `lumio_test` database, cleaned between each test suite.
-
-Test coverage:
-- **`auth.test.js`** — signup, login, protected routes, logout, token validation
-- **`courses.test.js`** — create, permissions, publish flow, enrollment rules
+The server starts at `http://localhost:3000`.
 
 ---
 
-## 📖 API Documentation
+## Environment Variables
 
-Interactive Swagger UI is available at:
+Create a `.env` file in the project root:
 
+```env
+# Server
+NODE_ENV=development
+PORT=3000
+
+# MongoDB
+MONGODB_URI=mongodb://localhost:27017/lumio
+
+# JWT
+JWT_ACCESS_SECRET=your_strong_access_secret_here
+JWT_ACCESS_EXPIRES_IN=1h
+JWT_REFRESH_SECRET=your_strong_refresh_secret_here
+JWT_REFRESH_EXPIRES_IN=30d
+
+# Email — Gmail App Password
+# Setup: myaccount.google.com → Security → 2-Step Verification → App passwords
+EMAIL_FROM=your.email@gmail.com
+EMAIL_APP_PASS=xxxx xxxx xxxx xxxx
+
+# Stripe (for paid course checkout)
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
 ```
-http://localhost:3000/api-docs
-```
 
-All endpoints are documented with request/response schemas, required fields, and authentication requirements.
+### Getting a Gmail App Password
+
+1. Go to [myaccount.google.com](https://myaccount.google.com) → **Security**
+2. Enable **2-Step Verification** (required)
+3. Search **"App passwords"** → create one named `Lumio`
+4. Copy the 16-character password into `EMAIL_APP_PASS`
+
+### Getting Stripe Keys
+
+1. Go to [dashboard.stripe.com](https://dashboard.stripe.com) → **Developers → API Keys**
+2. Copy **Secret key** into `STRIPE_SECRET_KEY`
+3. For the webhook secret, run the Stripe CLI locally:
+   ```bash
+   stripe listen --forward-to localhost:4000/api/v1/payments/webhook-checkout
+   ```
+   Copy the `whsec_...` value into `STRIPE_WEBHOOK_SECRET`
 
 ---
 
-## 🏗️ Architecture Notes
+## How to Use the Website
 
-- **`catchAsync`** — eliminates try/catch in every controller
-- **`AppError`** — custom error class distinguishing operational vs programming errors
-- **`APIFeatures`** — reusable query builder: filter → search → sort → limitFields → paginate
-- **Global error handler** — handles Mongoose cast errors, duplicate key errors, JWT errors differently in dev vs prod
-- **Factory-style middleware** — `protect`, `restrictTo(...roles)`, `isLoggedIn`
-- **Model hooks** — `post('save')` on Rating/Lesson/Enrollment auto-update denormalized stats on Course
+### As a Student
+
+1. **Sign up** at `/signup` — choose the Student role
+2. **Browse courses** at `/courses` — filter by category, level, or price; search by keyword
+3. **Open a course** — read the description, requirements, and lesson list
+4. **Enroll:**
+   - Free course → click **Enroll for Free** → enrolled instantly
+   - Paid course → click **Buy Now** → redirected to Stripe Checkout → pay → auto-enrolled on return
+5. **Start learning** — click **Continue Learning** to go to your first lesson
+6. **In the lesson player:**
+   - Watch the video (custom player with keyboard shortcuts: Space, ←→ seek, ↑↓ volume, M mute, F fullscreen)
+   - Click **Mark as Complete** when done (one-way — cannot undo)
+   - Navigate with **Previous / Next** buttons
+   - When the last lesson is finished, click **Finish Course 🎉**
+7. **Track progress** from your **Dashboard** — see enrolled courses and completion percentage
+8. **Leave a review** — once enrolled, scroll to the Reviews section on the course page
+9. **Update your profile** at `/profile` — change name, email, bio, or photo; update password
+10. **Deactivate account** — scroll to the Danger Zone on the profile page
+
+### As an Instructor
+
+1. **Sign up** at `/signup` — choose the Instructor role
+2. **Create a course** at `/courses/new`:
+   - Fill in title, description, category, level, price (0 = free)
+   - Upload a thumbnail image
+   - Add lessons with optional video files and a free-preview flag
+   - Choose **Save as Draft** or **Publish Now**
+3. **Manage your courses** from the **Dashboard** — see all your courses and their stats
+4. **Edit a course** — click the edit icon to update course info, add/edit/remove lessons, and change the thumbnail
+5. **Publish / Unpublish** — control course visibility from the edit page
+6. **View enrolled students** via the API (`GET /api/v1/courses/:id/enrollments`)
+
+---
+
+## API Reference
+
+The Postman collection at `postman/Lumio_API.postman_collection.json` covers every endpoint with example request bodies and auto-saves IDs after create operations.
+
+### Base URL
+
+```
+http://localhost:4000/api/v1
+```
+
+### Endpoint Summary
+
+| Resource    | Method           | Endpoint                               | Auth               |
+| ----------- | ---------------- | -------------------------------------- | ------------------ |
+| Auth        | POST             | `/auth/signup`                         | Public             |
+| Auth        | POST             | `/auth/login`                          | Public             |
+| Auth        | POST             | `/auth/logout`                         | Student/Instructor |
+| Auth        | POST             | `/auth/refresh-token`                  | Public             |
+| Auth        | POST             | `/auth/forgot-password`                | Public             |
+| Auth        | PATCH            | `/auth/reset-password/:token`          | Public             |
+| Auth        | PATCH            | `/auth/update-password`                | Any                |
+| Users       | GET              | `/users/me`                            | Any                |
+| Users       | PATCH            | `/users/update-me`                     | Any                |
+| Users       | DELETE           | `/users/delete-me`                     | Any                |
+| Users       | GET              | `/users`                               | Admin              |
+| Users       | GET/PATCH/DELETE | `/users/:id`                           | Admin              |
+| Courses     | GET              | `/courses`                             | Public             |
+| Courses     | GET              | `/courses/top-5`                       | Public             |
+| Courses     | GET              | `/courses/stats`                       | Instructor+        |
+| Courses     | GET              | `/courses/my`                          | Instructor         |
+| Courses     | GET              | `/courses/:id`                         | Public             |
+| Courses     | POST             | `/courses`                             | Instructor         |
+| Courses     | PATCH            | `/courses/:id`                         | Instructor (owner) |
+| Courses     | DELETE           | `/courses/:id`                         | Instructor (owner) |
+| Courses     | PATCH            | `/courses/:id/publish`                 | Instructor (owner) |
+| Courses     | PATCH            | `/courses/:id/unpublish`               | Instructor (owner) |
+| Lessons     | GET              | `/courses/:courseId/lessons`           | Public/Enrolled    |
+| Lessons     | GET              | `/lessons/:id`                         | Public/Enrolled    |
+| Lessons     | POST             | `/lessons`                             | Instructor         |
+| Lessons     | PATCH            | `/lessons/:id`                         | Instructor (owner) |
+| Lessons     | DELETE           | `/lessons/:id`                         | Instructor (owner) |
+| Enrollments | POST             | `/courses/:courseId/enrollments`       | Student            |
+| Enrollments | DELETE           | `/courses/:courseId/enrollments`       | Student            |
+| Enrollments | GET              | `/courses/:courseId/enrollments`       | Instructor         |
+| Enrollments | GET              | `/courses/:courseId/enrollments/check` | Any                |
+| Enrollments | GET              | `/enrollments/my`                      | Student            |
+| Payments    | GET              | `/payments/checkout-session/:courseId` | Student            |
+| Payments    | POST             | `/payments/webhook-checkout`           | Stripe (internal)  |
+| Comments    | GET              | `/comments/:lessonId/comments`         | Public             |
+| Comments    | POST             | `/comments`                            | Enrolled student   |
+| Comments    | PATCH            | `/comments/:id`                        | Author             |
+| Comments    | DELETE           | `/comments/:id`                        | Author/Admin       |
+| Ratings     | GET              | `/courses/:courseId/ratings`           | Public             |
+| Ratings     | POST             | `/courses/:courseId/ratings`           | Enrolled student   |
+| Ratings     | PATCH            | `/courses/:courseId/ratings/:id`       | Author             |
+| Ratings     | DELETE           | `/courses/:courseId/ratings/:id`       | Author/Admin       |
+| Progress    | GET              | `/progress/courses/:courseId`          | Enrolled student   |
+| Progress    | GET              | `/progress/lessons/:lessonId`          | Enrolled student   |
+| Progress    | PATCH            | `/progress/lessons/:lessonId`          | Enrolled student   |
+
+---
+
+## Security
+
+- **Helmet** — sets secure HTTP headers
+- **CORS** — allows all origins in development; restricted in production
+- **Rate limiting** — 100 requests/15min globally; stricter 20/15min on auth routes
+- **HPP** — prevents HTTP parameter pollution
+- **NoSQL injection sanitization** — via express-mongo-sanitize
+- **JWT** — access token (1h, HttpOnly cookie, SameSite: lax), refresh token (30d)
+- **Password hashing** — bcryptjs with cost factor 12
+- **Input validation** — express-validator on all write endpoints
+- **Role-based access** — Student / Instructor / Admin enforced per route
