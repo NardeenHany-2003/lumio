@@ -121,8 +121,7 @@ lumio/
 │   │   └── generateTokens.js
 │   ├── validators/
 │   └── views/                  # Pug templates + email templates
-├── postman/                    # Postman collection (all endpoints)
-└── config/                     # Swagger config
+└── postman/                    # Postman collection (all endpoints)
 ```
 
 ---
