@@ -1,0 +1,222 @@
+extends base
+
+block content
+  .dashboard
+    .dashboard__sidebar
+      .dashboard__profile
+        img.dashboard__avatar(src=`/img/${user.photo}`, alt=user.name)
+        h3 #{user.name}
+        span.badge.badge--role #{user.role}
+
+      nav.dashboard__nav
+        a.dashboard__nav-item(href='/dashboard')
+          i.bi.bi-grid-1x2
+          span  My Courses
+        a.dashboard__nav-item(href='/courses/new')
+          i.bi.bi-plus-circle
+          span  New Course
+        a.dashboard__nav-item(href='/profile')
+          i.bi.bi-person
+          span  Profile
+        a.dashboard__nav-item(href='#', id='logout-btn')
+          i.bi.bi-box-arrow-right
+          span  Log Out
+
+    .dashboard__main
+      .dashboard__header
+        h1.dashboard__title Edit Course
+        .dashboard__header-actions
+          a.btn.btn--ghost(href=`/courses/${course.slug}`, target='_blank')
+            i.bi.bi-eye
+            span  Preview
+          if course.isPublished
+            button.btn.btn--ghost#toggle-publish-btn(data-course-id=`${course._id}`, data-published='true')
+              i.bi.bi-eye-slash
+              span  Unpublish
+          else
+            button.btn.btn--primary#toggle-publish-btn(data-course-id=`${course._id}`, data-published='false')
+              i.bi.bi-globe
+              span  Publish Now
+
+      //- ── Basic Info ──────────────────────────
+      .profile-card
+        .profile-card__header
+          h2.profile-card__title
+            i.bi.bi-info-circle
+            |  Basic Information
+
+        #course-alert
+
+        .profile-form
+          .form-group
+            label(for='title') Course Title *
+            input.form-input#title(type='text', value=course.title, maxlength='120')
+
+          .form-group
+            label(for='summary') Short Summary
+            input.form-input#summary(type='text', value=course.summary || '', maxlength='300')
+
+          .form-group
+            label(for='description') Full Description *
+            textarea.form-input#description(rows='5', style='resize:vertical;', maxlength='2000')
+              | #{course.description}
+
+          .profile-form__row
+            .form-group
+              label(for='category') Category *
+              select.form-input#category
+                each cat in categories
+                  option(value=cat, selected=(cat === course.category)) #{cat}
+
+            .form-group
+              label(for='level') Level
+              select.form-input#level
+                each lvl in levels
+                  option(value=lvl, selected=(lvl === course.level)) #{lvl}
+
+          .form-group
+            label(for='price') Price (USD)
+            input.form-input#price(type='number', value=course.price, min='0', step='0.01')
+
+          .form-group
+            label(for='thumbnail') Course Thumbnail
+            .thumbnail-upload-wrapper
+              img#thumbnail-preview(
+                src=`/img/${course.thumbnail}`,
+                alt='Thumbnail preview',
+                style='width:160px;height:100px;object-fit:cover;border-radius:8px;border:2px solid var(--color-border);display:block;margin-bottom:.75rem;'
+              )
+              input.form-input#thumbnail(type='file', accept='image/jpeg,image/png,image/webp')
+            p.form-hint JPG, PNG or WebP · Max 5MB · Leave empty to keep current thumbnail.
+
+          button.btn.btn--primary#save-course-btn
+            i.bi.bi-check-lg
+            span  Save Changes
+
+      //- ── Outcomes ────────────────────────────
+      .profile-card
+        .profile-card__header
+          h2.profile-card__title
+            i.bi.bi-list-check
+            |  Course Outcomes
+
+        .profile-form
+          .form-group
+            label What You'll Learn
+            .dynamic-list#learn-list
+            .dynamic-list__input-row
+              input.form-input#learn-input(type='text', placeholder='e.g. Build REST APIs')
+              button.btn.btn--primary.btn--sm#learn-add-btn(type='button')
+                i.bi.bi-plus-lg
+
+          .form-group
+            label Requirements
+            .dynamic-list#req-list
+            .dynamic-list__input-row
+              input.form-input#req-input(type='text', placeholder='e.g. Basic JavaScript')
+              button.btn.btn--primary.btn--sm#req-add-btn(type='button')
+                i.bi.bi-plus-lg
+
+          .form-group
+            label Tags
+            .dynamic-list#tags-list
+            .dynamic-list__input-row
+              input.form-input#tags-input(type='text', placeholder='e.g. nodejs')
+              button.btn.btn--primary.btn--sm#tags-add-btn(type='button')
+                i.bi.bi-plus-lg
+
+          button.btn.btn--primary#save-outcomes-btn
+            i.bi.bi-check-lg
+            span  Save Outcomes
+
+      //- ── Lessons ─────────────────────────────
+      .profile-card
+        .profile-card__header
+          h2.profile-card__title
+            i.bi.bi-camera-video
+            |  Lessons
+          p(style='color:var(--color-text-muted);font-size:.88rem;margin-top:.35rem;')
+            | #{course.totalLessons} lesson#{course.totalLessons !== 1 ? 's' : ''} · #{course.totalDuration} min total
+
+        #lessons-list-container
+          if course.lessons && course.lessons.length
+            each lesson in course.lessons
+              .lesson-builder-item
+                .lesson-builder-item__left
+                  span.lesson-builder-item__order #{lesson.order}
+                  .lesson-builder-item__info
+                    span.lesson-builder-item__title #{lesson.title}
+                    .lesson-builder-item__meta
+                      if lesson.duration
+                        span
+                          i.bi.bi-clock
+                          |  #{lesson.duration} min
+                      if lesson.videoPath
+                        span
+                          i.bi.bi-camera-video
+                          |  Has video
+                      if lesson.isFree
+                        span.badge.badge--success(style='font-size:.72rem;') Free
+          else
+            p.loading-text No lessons yet.
+
+        hr(style='margin:1.5rem 0;border:none;border-top:1px solid var(--color-border);')
+
+        //- Add / Edit lesson form
+        h3(style='font-size:1rem;font-weight:700;margin-bottom:1rem;')
+          i.bi.bi-plus-circle(style='color:var(--color-primary);margin-right:.4rem;')
+          span#lesson-form-title  Add New Lesson
+
+        #lesson-alert
+
+        .profile-form
+          input(type='hidden', id='editing-lesson-id', value='')
+
+          .profile-form__row
+            .form-group
+              label(for='lesson-title') Lesson Title *
+              input.form-input#lesson-title(type='text', placeholder='e.g. Introduction to Node.js', maxlength='150')
+
+            .form-group
+              label(for='lesson-duration') Duration (minutes)
+              input.form-input#lesson-duration(type='number', placeholder='25', min='0', value='0')
+
+          .form-group
+            label(for='lesson-video') Lesson Video
+            #existing-video-info
+            input.form-input#lesson-video(type='file', accept='video/mp4,video/webm,video/ogg,video/quicktime')
+            input(type='hidden', id='remove-video-flag', value='false')
+            p.form-hint MP4, WebM, or MOV · Max 500MB. Leave empty to keep existing video.
+
+          .form-group
+            label(for='lesson-content') Lesson Notes
+            textarea.form-input#lesson-content(rows='3', placeholder='Optional text content…', style='resize:vertical;')
+
+          .profile-form__row
+            .form-group
+              label(for='lesson-order') Order
+              input.form-input#lesson-order(type='number', min='0', value='1')
+
+            .form-group
+              label &nbsp;
+              label(for='lesson-is-free', style='display:flex;align-items:center;gap:.5rem;cursor:pointer;padding:.6rem .9rem;border:1.5px solid var(--color-border);border-radius:var(--radius-sm);font-weight:600;font-size:.9rem;')
+                input(type='checkbox', id='lesson-is-free', style='width:16px;height:16px;accent-color:var(--color-primary);')
+                i.bi.bi-unlock
+                span  Free Preview
+
+          .form-group(style='display:flex;gap:.75rem;flex-wrap:wrap;')
+            button.btn.btn--primary#save-lesson-btn(type='button')
+              i.bi.bi-check-lg
+              span  Save Lesson
+            button.btn.btn--ghost#cancel-edit-lesson-btn(type='button', style='display:none;')
+              i.bi.bi-x-lg
+              span  Cancel
+
+block scripts
+  script.
+    const COURSE_ID   = "!{course._id}";
+    const COURSE_SLUG = "!{course.slug}";
+    const WHAT_YOU_LEARN = !{JSON.stringify(course.whatYouLearn || [])};
+    const REQUIREMENTS = !{JSON.stringify(course.requirements || [])};
+    const TAGS = !{JSON.stringify(course.tags || [])};
+  script(src='/js/editCourse.js')
