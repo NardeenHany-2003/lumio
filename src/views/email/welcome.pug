@@ -1,0 +1,10 @@
+extends baseEmail
+
+block content
+  h1 Welcome to Lumio!
+  p Hi #{firstName},
+  p Your account has been created successfully. You can now browse courses, enroll, and start learning right away.
+  a.email-btn(href=url) Go to Your Dashboard
+  hr.email-divider
+  p.email-small Happy learning!
+  p.email-small — The Lumio Team

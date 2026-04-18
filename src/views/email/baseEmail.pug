@@ -1,0 +1,29 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title #{subject}
+    style.
+      body { margin:0; padding:0; background-color:#f4f4f7; font-family:Arial,sans-serif; color:#111827; }
+      .ew  { width:100%; background-color:#f4f4f7; padding:40px 0; }
+      .ec  { max-width:520px; margin:0 auto; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,.07); }
+      .eh  { background:#6c47ff; padding:28px 40px; text-align:center; }
+      .eh__brand { color:#fff; font-size:22px; font-weight:700; letter-spacing:-.5px; text-decoration:none; }
+      .eb  { padding:40px 40px 32px; }
+      .eb h1 { font-size:22px; font-weight:700; color:#111827; margin:0 0 12px; }
+      .eb p  { font-size:15px; line-height:1.7; color:#4b5563; margin:0 0 20px; }
+      .btn { display:inline-block; background:#6c47ff; color:#fff !important; text-decoration:none; padding:14px 32px; border-radius:8px; font-size:15px; font-weight:600; margin:8px 0 24px; }
+      .divider { border:none; border-top:1px solid #f3f4f6; margin:24px 0; }
+      .small { font-size:13px; color:#9ca3af; word-break:break-all; }
+      .ef  { background:#f9fafb; padding:20px 40px; text-align:center; font-size:12px; color:#9ca3af; border-top:1px solid #f3f4f6; }
+  body
+    .ew
+      .ec
+        .eh
+          span.eh__brand 💡 Lumio
+        .eb
+          block content
+        .ef
+          p &copy; #{new Date().getFullYear()} Lumio. All rights reserved.
+          p If you didn't request this email, you can safely ignore it.
