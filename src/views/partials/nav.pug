@@ -1,0 +1,31 @@
+nav.navbar
+  .navbar__container
+    a.navbar__logo(href='/')
+      img(src='/img/lumio-logo.png', alt='Lumio', style='height:30px;')
+
+    ul.navbar__links
+      li: a(href='/courses') Browse Courses
+      if user
+        if user.role === 'instructor'
+          li: a(href='/dashboard') My Courses
+        else
+          li: a(href='/dashboard') My Learning
+
+    .navbar__actions
+      if user
+        .navbar__user#navbar-user-btn
+          img.navbar__avatar(src=`/img/${user.photo}`, alt=user.name)
+          .navbar__dropdown#navbar-dropdown
+            span.navbar__user-name #{user.name}
+            a(href='/dashboard')
+              i.bi.bi-grid-1x2
+              |  Dashboard
+            a(href='/profile')
+              i.bi.bi-person
+              |  Profile
+            a(href='#', id='logout-btn')
+              i.bi.bi-box-arrow-right
+              |  Log Out
+      else
+        a.btn.btn--ghost(href='/login') Log In
+        a.btn.btn--primary(href='/signup') Get Started

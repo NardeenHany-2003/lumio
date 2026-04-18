@@ -1,0 +1,28 @@
+footer.footer
+  .footer__container
+    .footer__brand
+      a.footer__logo(href='/')
+        span 💡
+        span Lumio
+      p.footer__tagline Learn without limits. Grow without boundaries.
+
+    .footer__links
+      .footer__col
+        h4 Platform
+        ul
+          li: a(href='/courses') All Courses
+          li: a(href='/signup') Become a Student
+          li: a(href='/signup?role=instructor') Become an Instructor
+      .footer__col
+        h4 Resources
+        ul
+          li: a(href='https://github.com') GitHub
+      .footer__col
+        h4 Categories
+        ul
+          li: a(href='/courses?category=Web Development') Web Development
+          li: a(href='/courses?category=Data Science %26 ML') Data Science
+          li: a(href='/courses?category=DevOps %26 Cloud') DevOps & Cloud
+
+  .footer__bottom
+    p &copy; #{new Date().getFullYear()} Lumio.

@@ -1,0 +1,22 @@
+.course-card
+  a.course-card__thumb-link(href=`/courses/${course.slug}`)
+    img.course-card__thumb(src=`/img/${course.thumbnail}`, alt=course.title, loading='lazy')
+    span.course-card__level #{course.level}
+  .course-card__body
+    //- span.course-card__category #{course.category}
+    a.course-card__title(href=`/courses/${course.slug}`) #{course.title}
+    .course-card__meta
+      .course-card__rating
+        span.stars ★
+        span #{course.ratingsAverage > 0 ? course.ratingsAverage.toFixed(1) : 'New'}
+      span.course-card__dot ·
+      span #{course.totalStudents} students
+    .course-card__footer
+      .course-card__instructor
+        img(src=`/img/${course.instructor.photo}`, alt=course.instructor.name)
+        span #{course.instructor.name}
+      span.course-card__price
+        if course.price === 0
+          | Free
+        else
+          | $#{course.price}
