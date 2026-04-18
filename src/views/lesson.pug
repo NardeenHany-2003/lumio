@@ -1,0 +1,106 @@
+extends base
+
+block content
+  .lesson-player
+    //- ── Sidebar ──────────────────────────────
+    .lesson-player__sidebar
+      .lesson-sidebar__header
+        a.lesson-sidebar__back(href=`/courses/${lesson.course.slug}`)
+          i.bi.bi-arrow-left
+          |  #{lesson.course.title}
+
+      .lesson-sidebar__list
+        each l, i in allLessons
+          - const isDone = completedIds.includes(l._id.toString())
+          - const isCurrent = l._id.toString() === lesson._id.toString()
+          a.lesson-sidebar__item(
+            href=`/lessons/${l._id}`,
+            class=`${isCurrent ? 'lesson-sidebar__item--active' : ''} ${isDone ? 'lesson-sidebar__item--done' : ''}`
+          )
+            .lesson-sidebar__item-left
+              if isDone
+                i.bi.bi-check-circle-fill(style='color:#22c55e')
+              else if isCurrent
+                i.bi.bi-play-circle-fill(style='color:#6c63ff')
+              else
+                i.bi.bi-circle(style='color:#d1d5db')
+            .lesson-sidebar__item-info
+              span.lesson-sidebar__item-title #{l.title}
+              if l.duration
+                span.lesson-sidebar__item-duration #{l.duration} min
+
+    //- ── Main content ─────────────────────────
+    .lesson-player__main
+      .lesson-player__header
+        h1.lesson-player__title #{lesson.title}
+        if lesson.duration
+          span.lesson-player__duration
+            i.bi.bi-clock
+            |  #{lesson.duration} min
+
+      if lesson.videoPath
+        .lesson-player__video
+          video#lesson-video-player(
+            src=`/${lesson.videoPath}`,
+            preload='metadata',
+            style='width:100%;height:100%;background:#000;display:block;'
+          )
+
+        //- Custom controls
+        .video-controls
+          .video-controls__progress
+            .video-controls__progress-bar#progress-bar
+              .video-controls__progress-fill#progress-fill
+              .video-controls__progress-thumb#progress-thumb
+
+          .video-controls__row
+            .video-controls__left
+              button.video-btn#play-btn
+                i.bi.bi-play-fill#play-icon
+              button.video-btn#mute-btn
+                i.bi.bi-volume-up-fill#mute-icon
+              .video-volume
+                input#volume-slider(type='range', min='0', max='1', step='0.05', value='1')
+              span.video-time#time-display 0:00 / 0:00
+
+            .video-controls__right
+              .video-speed
+                button.video-btn#speed-btn 1×
+                .video-speed__menu#speed-menu
+                  each s in ['0.5', '0.75', '1', '1.25', '1.5', '2']
+                    button.video-speed__option(data-speed=s) #{s}×
+              button.video-btn#fullscreen-btn
+                i.bi.bi-fullscreen
+
+      if lesson.content
+        .lesson-player__content #{lesson.content}
+
+      .lesson-player__footer
+        .lesson-player__nav
+          if prevLesson
+            a.btn.btn--ghost(href=`/lessons/${prevLesson._id}`)
+              i.bi.bi-arrow-left
+              |  Previous
+          else
+            span
+
+          if enrollment
+            button.btn.btn--primary#mark-complete-btn(
+              data-lesson-id=`${lesson._id}`,
+              data-completed=`${isCompleted}`
+            )
+              if isCompleted
+                | Completed
+              else
+                | Mark as Complete
+
+          if nextLesson
+            a.btn.btn--primary(href=`/lessons/${nextLesson._id}`)
+              | Next 
+              i.bi.bi-arrow-right
+          else
+            a.btn.btn--success(href=`/courses/${lesson.course.slug}`)
+              | Finish Course
+
+block scripts
+  script(src='/js/lesson.js')
