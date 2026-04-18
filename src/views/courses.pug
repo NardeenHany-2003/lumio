@@ -1,0 +1,74 @@
+extends base
+
+block content
+  .courses-page
+    //- ── Sidebar Filters ──────────────────────────
+    aside.courses-page__sidebar
+      h3.sidebar__title Filters
+      
+      .sidebar__group
+        label.sidebar__label Category
+        select.sidebar__select#filter-category
+          option(value='') All Categories
+          option(value='Web Development') Web Development
+          option(value='Mobile Development') Mobile Development
+          option(value='Data Science & ML') Data Science & ML
+          option(value='DevOps & Cloud') DevOps & Cloud
+          option(value='Cybersecurity') Cybersecurity
+          option(value='AI & Machine Learning') AI & Machine Learning
+          option(value='Game Development') Game Development
+          option(value='Blockchain') Blockchain
+          option(value='Database') Database
+          option(value='Programming Languages') Programming Languages
+
+      .sidebar__group
+        label.sidebar__label Level
+        select.sidebar__select#filter-level
+          option(value='') All Levels
+          option(value='Beginner') Beginner
+          option(value='Intermediate') Intermediate
+          option(value='Advanced') Advanced
+          option(value='All Levels') All Levels
+
+      .sidebar__group
+        label.sidebar__label Sort By
+        select.sidebar__select#filter-sort
+          option(value='-ratingsAverage') Highest Rated
+          option(value='-totalStudents') Most Popular
+          option(value='-createdAt') Newest
+          option(value='price') Price: Low to High
+          option(value='-price') Price: High to Low
+
+      .sidebar__group
+        label.sidebar__label Price
+        .sidebar__radios
+          label 
+            input(type='radio', name='price-filter', value='')  
+            |  All
+          label 
+            input(type='radio', name='price-filter', value='free')  
+            |  Free
+          label 
+            input(type='radio', name='price-filter', value='paid')  
+            |  Paid
+
+      button.btn.btn--primary.btn--block#apply-filters Apply Filters
+      button.btn.btn--ghost.btn--block#reset-filters Reset
+
+    //- ── Main Content ─────────────────────────────
+    .courses-page__main
+      .courses-page__header
+        .courses-page__search
+          i.bi.bi-search
+          input.search-input#search-input(type='text', placeholder='Search courses…')
+
+        p.courses-page__count#results-count Loading courses…
+
+      .courses-grid#courses-grid
+        //- Populated by JS via API
+
+      .pagination#pagination
+        //- Populated by JS
+
+block scripts
+  script(src='/js/courses.js')

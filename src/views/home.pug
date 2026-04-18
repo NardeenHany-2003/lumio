@@ -1,0 +1,73 @@
+extends base
+
+block content
+  //- ── Hero Section ──────────────────────────────
+  section.hero
+    .hero__content
+      .hero__badge ✨ The Future of Online Learning
+      h1.hero__title
+        | Learn Skills That
+        span.hero__title--accent  Matter Today
+      p.hero__subtitle
+        | Join thousands of students mastering in-demand tech skills taught by
+        | industry experts — at your own pace, on your own terms.
+      .hero__actions
+        a.btn.btn--primary.btn--lg(href='/courses') Explore Courses
+        if !user
+          a.btn.btn--ghost.btn--lg(href='/signup') Start Free
+      .hero__stats
+        .hero__stat
+          span.hero__stat-number 10K+
+          span.hero__stat-label Students
+        .hero__stat
+          span.hero__stat-number 500+
+          span.hero__stat-label Courses
+        .hero__stat
+          span.hero__stat-number 200+
+          span.hero__stat-label Instructors
+
+  //- ── Categories Section ────────────────────────
+  section.section
+    .container
+      .section__header
+        h2.section__title Browse by Category
+        p.section__subtitle Find the perfect course for where you want to go.
+
+      .categories-grid
+        each cat in categories
+          a.category-card(href=`/courses?category=${encodeURIComponent(cat)}`)
+            span.category-card__icon
+              if cat === 'Web Development'
+                | 🌐
+              else if cat === 'Mobile Development'
+                | 📱
+              else if cat === 'Data Science & ML'
+                | 📊
+              else if cat === 'DevOps & Cloud'
+                | ☁️
+              else if cat === 'Cybersecurity'
+                | 🔒
+              else
+                | 🤖
+            span.category-card__name #{cat}
+
+  //- ── Featured Courses ──────────────────────────
+  section.section.section--alt
+    .container
+      .section__header
+        h2.section__title Featured Courses
+        a.section__link(href='/courses') View all →
+
+      .courses-grid
+        each course in featuredCourses
+          include partials/courseCard
+
+  //- ── CTA Section ────────────────────────────────
+  if !user
+    section.cta
+      .cta__content
+        h2.cta__title Ready to Start Learning?
+        p.cta__subtitle Join Lumio today — it's free to get started.
+        .cta__actions
+          a.btn.btn--white.btn--lg(href='/signup') Create Free Account
+          a.btn.btn--ghost-white.btn--lg(href='/login') Sign In

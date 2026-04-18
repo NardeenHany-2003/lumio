@@ -1,0 +1,135 @@
+extends base
+
+block content
+  .course-detail
+    //- ── Hero Header ─────────────────────────────
+    .course-detail__header
+      .container
+        .course-detail__breadcrumb
+          a(href='/courses') Courses
+          span  / 
+          //- span #{course.category}
+
+        h1.course-detail__title #{course.title}
+        p.course-detail__summary #{course.summary || course.description.substring(0, 200) + '…'}
+
+        .course-detail__meta
+          if course.ratingsAverage > 0
+            .course-detail__rating
+              span.stars 
+                each i in [1, 2, 3, 4, 5]
+                  if i<=Math.round(course.ratingsAverage)
+                    span(style='color:#f59e0b') ★
+                  else 
+                    span(style='color:#d1d5db') ★
+              span.rating-value  #{course.ratingsAverage.toFixed(1)}
+              span.rating-count  (#{course.ratingsQuantity} reviews)
+          else 
+            span.rating-muted No ratings yet
+          span.badge #{course.level}
+          //- span.badge #{course.category}
+          span #{course.totalStudents} students enrolled
+
+        .course-detail__instructor-info
+          img(src=`/img/${course.instructor.photo}`, alt=course.instructor.name)
+          span Created by 
+          strong #{course.instructor.name}
+
+    .course-detail__body.container
+      .course-detail__main
+        //- ── What You'll Learn ────────────────────
+        if course.whatYouLearn && course.whatYouLearn.length
+          .course-section
+            h2.course-section__title What You'll Learn
+            .learn-grid
+              each item in course.whatYouLearn
+                .learn-item
+                  i.bi.bi-check-circle-fill
+                  span #{item}
+
+        //- ── Requirements ────────────────────────
+        if course.requirements && course.requirements.length
+          .course-section
+            h2.course-section__title Requirements
+            ul.requirements-list
+              each req in course.requirements
+                li #{req}
+
+        //- ── Course Content ───────────────────────
+        .course-section
+          h2.course-section__title Course Content
+          p.course-section__meta
+            span #{course.totalLessons} lessons
+            span  · 
+            span #{Math.floor(course.totalDuration / 60)}h #{course.totalDuration % 60}m total
+
+          .lessons-list
+            if course.lessons && course.lessons.length
+              each lesson, i in course.lessons
+                - const isLocked = !isEnrolled && !lesson.isFree
+                - const lessonHref = isLocked ? '#' : `/lessons/${lesson._id}`
+                a.lesson-item(
+                  href=lessonHref,
+                  class=isLocked ? 'lesson-item--locked' : '',
+                  style='display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:inherit;'
+                )
+                  .lesson-item__left
+                    span.lesson-item__number #{i + 1}
+                    .lesson-item__info
+                      span.lesson-item__title #{lesson.title}
+                      if lesson.duration
+                        span.lesson-item__duration #{lesson.duration} min
+                  .lesson-item__right
+                    if isLocked
+                      i.bi.bi-lock-fill
+                    else
+                      i.bi.bi-play-circle
+            else
+              p.loading-text No lessons have been added to this course yet.
+
+        //- ── Ratings ─────────────────────────────
+        .course-section
+          h2.course-section__title Student Reviews
+          #ratings-container
+            p.loading-text Loading reviews…
+
+      //- ── Sidebar CTA ─────────────────────────
+      .course-detail__sidebar
+        .course-cta-card
+          img.course-cta-card__thumb(src=`/img/${course.thumbnail}`, alt=course.title)
+          .course-cta-card__price
+            if course.price === 0
+              span.price-free Free
+            else
+              span.price-amount $#{course.price}
+
+          if isEnrolled
+            a.btn.btn--primary.btn--block(href='#lessons') Continue Learning
+            p.course-cta-card__enrolled You are enrolled
+          else if user
+            button.btn.btn--primary.btn--block#enroll-btn(data-course-id=`${course._id}`, data-course-price=`${course.price}`)
+              | #{course.price === 0 ? 'Enroll for Free' : `Buy Now — $${course.price}`}
+          else
+            a.btn.btn--primary.btn--block(href='/login') Log In to Enroll
+
+          .course-cta-card__includes
+            h4 This course includes:
+            ul
+              li
+                i.bi.bi-camera-video
+                span #{course.totalLessons} lessons
+              li
+                i.bi.bi-clock
+                span #{Math.floor(course.totalDuration / 60)}h #{course.totalDuration % 60}m content
+              li
+                i.bi.bi-infinity
+                span Full lifetime access
+              li
+                i.bi.bi-phone
+                span Access on all devices
+              li
+                i.bi.bi-award
+                span Certificate of completion
+
+block scripts
+  script(src='/js/courseDetail.js')
