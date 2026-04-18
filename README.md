@@ -140,7 +140,7 @@ lumio/
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/lumio.git
+git clone https://github.com/NardeenHany-2003/lumio.git
 cd lumio
 
 # Install dependencies
