@@ -1,0 +1,1744 @@
+{
+  "info": {
+    "name": "Lumio API",
+    "_postman_id": "lumio-api-collection-v2",
+    "description": "Complete API collection for Lumio — an online learning platform.\n\n**Setup:**\n1. Set `baseUrl` to `http://localhost:3000`\n2. After Login or Signup, `accessToken` is auto-set by the test script.\n3. After creating a Course/Lesson/Comment/Rating, the ID is auto-saved.\n\n**Roles:** Student, Instructor, Admin\n**Auth:** JWT via HttpOnly cookie (set automatically by server on login/signup).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "refreshToken",
+      "value": ""
+    },
+    {
+      "key": "userId",
+      "value": ""
+    },
+    {
+      "key": "courseId",
+      "value": ""
+    },
+    {
+      "key": "courseSlug",
+      "value": ""
+    },
+    {
+      "key": "lessonId",
+      "value": ""
+    },
+    {
+      "key": "enrollmentId",
+      "value": ""
+    },
+    {
+      "key": "commentId",
+      "value": ""
+    },
+    {
+      "key": "ratingId",
+      "value": ""
+    },
+    {
+      "key": "resetToken",
+      "value": ""
+    },
+    {
+      "key": "bookingSessionId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "🔐 Auth",
+      "item": [
+        {
+          "name": "Signup — Student",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code===201){const d=pm.response.json();pm.collectionVariables.set('accessToken',d.accessToken);pm.collectionVariables.set('refreshToken',d.refreshToken);pm.collectionVariables.set('userId',d.data.user._id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Student\",\n  \"email\": \"jane.student@lumio.com\",\n  \"password\": \"Test1234!\",\n  \"passwordConfirm\": \"Test1234!\",\n  \"role\": \"student\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "signup"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Signup — Instructor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code===201){const d=pm.response.json();pm.collectionVariables.set('accessToken',d.accessToken);pm.collectionVariables.set('refreshToken',d.refreshToken);pm.collectionVariables.set('userId',d.data.user._id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ahmed Instructor\",\n  \"email\": \"ahmed.instructor@lumio.com\",\n  \"password\": \"Test1234!\",\n  \"passwordConfirm\": \"Test1234!\",\n  \"role\": \"instructor\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "signup"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code===200){const d=pm.response.json();pm.collectionVariables.set('accessToken',d.accessToken);pm.collectionVariables.set('refreshToken',d.refreshToken);pm.collectionVariables.set('userId',d.data.user._id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jane.student@lumio.com\",\n  \"password\": \"Test1234!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code===200){const d=pm.response.json();pm.collectionVariables.set('accessToken',d.accessToken);pm.collectionVariables.set('refreshToken',d.refreshToken);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/refresh-token",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "refresh-token"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jane.student@lumio.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "forgot-password"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "PATCH",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"NewPass1234!\",\n  \"passwordConfirm\": \"NewPass1234!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/reset-password/{{resetToken}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "reset-password",
+                "{{resetToken}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Password",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"passwordCurrent\": \"Test1234!\",\n  \"password\": \"NewPass1234!\",\n  \"passwordConfirm\": \"NewPass1234!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/update-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "update-password"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "logout"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👤 Users",
+      "item": [
+        {
+          "name": "Get Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "me"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Me (name, email, bio)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Jane Updated",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "jane.updated@lumio.com",
+                  "type": "text"
+                },
+                {
+                  "key": "bio",
+                  "value": "Updated bio here",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/update-me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "update-me"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Me (with photo)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Jane Photo",
+                  "type": "text"
+                },
+                {
+                  "key": "photo",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/update-me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "update-me"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Deactivate My Account",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/delete-me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "delete-me"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Users (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users?page=1&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User by ID (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{userId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update User (Admin)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Admin Updated Name\",\n  \"role\": \"instructor\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{userId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete User (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "{{userId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📚 Courses",
+      "item": [
+        {
+          "name": "Get All Courses",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses?page=1&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Courses",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses?search=node&page=1&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "node"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter by Category & Level",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses?category=Web Development&level=Beginner",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses"
+              ],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Web Development"
+                },
+                {
+                  "key": "level",
+                  "value": "Beginner"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter Free Courses",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses?price[lte]=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses"
+              ],
+              "query": [
+                {
+                  "key": "price[lte]",
+                  "value": "0"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Top 5 Courses",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/top-5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "top-5"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Course Stats (Instructor+)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "stats"
+              ]
+            }
+          }
+        },
+        {
+          "name": "My Courses (Instructor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/my",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "my"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Single Course (by ID or slug)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code===200){const d=pm.response.json();pm.collectionVariables.set('courseId',d.data.course._id);pm.collectionVariables.set('courseSlug',d.data.course.slug);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Course (with thumbnail)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code===201){const d=pm.response.json();pm.collectionVariables.set('courseId',d.data.course._id);pm.collectionVariables.set('courseSlug',d.data.course.slug);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Complete Node.js Bootcamp",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "A comprehensive Node.js course covering Express, MongoDB, authentication, and more.",
+                  "type": "text"
+                },
+                {
+                  "key": "summary",
+                  "value": "Master Node.js from scratch",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "Web Development",
+                  "type": "text"
+                },
+                {
+                  "key": "level",
+                  "value": "Beginner",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "29.99",
+                  "type": "text"
+                },
+                {
+                  "key": "isPublished",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "key": "thumbnail",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Course",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Updated Node.js Bootcamp",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "39.99",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Publish Course",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}/publish",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}",
+                "publish"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Unpublish Course",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}/unpublish",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}",
+                "unpublish"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Course",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🎓 Lessons",
+      "item": [
+        {
+          "name": "Get Lessons for Course",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}/lessons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}",
+                "lessons"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Single Lesson",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/lessons/{{lessonId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "lessons",
+                "{{lessonId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Lesson (with video)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code===201){const d=pm.response.json();pm.collectionVariables.set('lessonId',d.data.lesson._id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Introduction to Node.js",
+                  "type": "text"
+                },
+                {
+                  "key": "course",
+                  "value": "{{courseId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "content",
+                  "value": "This lesson covers the basics of Node.js.",
+                  "type": "text"
+                },
+                {
+                  "key": "duration",
+                  "value": "25",
+                  "type": "text"
+                },
+                {
+                  "key": "order",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "isFree",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "video",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/lessons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "lessons"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Lesson",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Updated Introduction to Node.js",
+                  "type": "text"
+                },
+                {
+                  "key": "duration",
+                  "value": "30",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/lessons/{{lessonId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "lessons",
+                "{{lessonId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Lesson",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/lessons/{{lessonId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "lessons",
+                "{{lessonId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👥 Enrollments",
+      "item": [
+        {
+          "name": "Enroll in Course (Free)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code===201){const d=pm.response.json();pm.collectionVariables.set('enrollmentId',d.data.enrollment._id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}/enrollments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}",
+                "enrollments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Check Enrollment Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}/enrollments/check",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}",
+                "enrollments",
+                "check"
+              ]
+            }
+          }
+        },
+        {
+          "name": "My Enrollments (Student)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/enrollments/my",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "enrollments",
+                "my"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Course Enrollments (Instructor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}/enrollments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}",
+                "enrollments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Unenroll from Course",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}/enrollments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}",
+                "enrollments"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "💳 Payments",
+      "item": [
+        {
+          "name": "Get Checkout Session (Paid Course)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code===200){const d=pm.response.json();pm.collectionVariables.set('bookingSessionId',d.sessionId);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/payments/checkout-session/{{courseId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "checkout-session",
+                "{{courseId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Stripe Webhook (Internal — not for manual use)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "stripe-signature",
+                "value": "your_stripe_signature_here"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"type\": \"checkout.session.completed\", \"data\": { \"object\": {} } }"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/payments/webhook-checkout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "webhook-checkout"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "💬 Comments",
+      "item": [
+        {
+          "name": "Get Lesson Comments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/comments/{{lessonId}}/comments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "comments",
+                "{{lessonId}}",
+                "comments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Comment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code===201){const d=pm.response.json();pm.collectionVariables.set('commentId',d.data.comment._id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lesson\": \"{{lessonId}}\",\n  \"text\": \"Great lesson! Really helped me understand the concept.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/comments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "comments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Comment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Updated comment — even better explanation!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/comments/{{commentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "comments",
+                "{{commentId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Comment",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/comments/{{commentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "comments",
+                "{{commentId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "⭐ Ratings",
+      "item": [
+        {
+          "name": "Get Course Ratings",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}/ratings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}",
+                "ratings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Rating",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code===201){const d=pm.response.json();pm.collectionVariables.set('ratingId',d.data.rating._id);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 5,\n  \"review\": \"Excellent course! Highly recommended for anyone learning Node.js.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}/ratings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}",
+                "ratings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Rating",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 4,\n  \"review\": \"Updated review — still a great course!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}/ratings/{{ratingId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}",
+                "ratings",
+                "{{ratingId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Rating",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/{{courseId}}/ratings/{{ratingId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "{{courseId}}",
+                "ratings",
+                "{{ratingId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📊 Progress",
+      "item": [
+        {
+          "name": "Get Course Progress",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/progress/courses/{{courseId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "progress",
+                "courses",
+                "{{courseId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Lesson Progress",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/progress/lessons/{{lessonId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "progress",
+                "lessons",
+                "{{lessonId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Mark Lesson Complete",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isCompleted\": true,\n  \"watchedDuration\": 1500\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/progress/lessons/{{lessonId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "progress",
+                "lessons",
+                "{{lessonId}}"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
