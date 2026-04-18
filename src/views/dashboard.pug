@@ -1,0 +1,105 @@
+extends base
+
+block content
+  .dashboard
+    .dashboard__sidebar
+      .dashboard__profile
+        img.dashboard__avatar(src=`/img/${user.photo}`, alt=user.name)
+        h3 #{user.name}
+        span.badge.badge--role #{user.role}
+
+      nav.dashboard__nav
+        if user.role === 'student'
+          a.dashboard__nav-item.active(href='/dashboard')
+            i.bi.bi-grid-1x2
+            span  My Learning
+          a.dashboard__nav-item(href='/courses')
+            i.bi.bi-search
+            span  Browse Courses
+        else if user.role === 'instructor'
+          a.dashboard__nav-item.active(href='/dashboard')
+            i.bi.bi-grid-1x2
+            span  My Courses
+          a.dashboard__nav-item(href='/courses/new', id='create-course-btn')
+            i.bi.bi-plus-circle
+            span  New Course
+        a.dashboard__nav-item(href='/profile')
+          i.bi.bi-person
+          span  Profile
+        a.dashboard__nav-item(href='#', id='logout-btn')
+          i.bi.bi-box-arrow-right
+          span  Log Out
+
+    .dashboard__main
+      if user.role === 'student'
+        h1.dashboard__title My Learning
+
+        if enrollments && enrollments.length
+          .dashboard__grid
+            each enrollment in enrollments
+              .progress-card
+                a(href=`/courses/${enrollment.course.slug}`)
+                  img.progress-card__thumb(src=`/img/${enrollment.course.thumbnail}`, alt=enrollment.course.title)
+                .progress-card__body
+                  a.progress-card__title(href=`/courses/${enrollment.course.slug}`)
+                    | #{enrollment.course.title}
+                  .progress-bar
+                    .progress-bar__fill(style=`width: ${enrollment.progressPercent}%`)
+                  .progress-card__meta
+                    span #{enrollment.progressPercent}% complete
+                    if enrollment.isCompleted
+                      span.badge.badge--success Completed
+
+          a.btn.btn--ghost(href='/courses') Browse More Courses
+        else
+          .dashboard__empty
+            p.empty-icon 📚
+            h3 No courses yet
+            p You haven't enrolled in any courses yet.
+            a.btn.btn--primary(href='/courses') Browse Courses
+
+      else if user.role === 'instructor'
+        .dashboard__header
+          h1.dashboard__title My Courses
+          a.btn.btn--primary(href='/courses/new')
+            i.bi.bi-plus
+            span  New Course
+
+        if courses && courses.length
+          .dashboard__table-wrapper
+            table.dashboard__table
+              thead
+                tr
+                  th Course
+                  th Students
+                  th Rating
+                  th Status
+                  th Actions
+              tbody
+                each course in courses
+                  tr
+                    td
+                      .table-course
+                        img(src=`/img/${course.thumbnail}`, alt=course.title)
+                        a(href=`/courses/${course.slug}`) #{course.title}
+                    td #{course.totalStudents}
+                    td
+                      if course.ratingsAverage > 0
+                        | ★ #{course.ratingsAverage.toFixed(1)}
+                      else
+                        | —
+                    td
+                      span(class=`badge badge--${course.isPublished ? 'success' : 'warning'}`)
+                        | #{course.isPublished ? 'Published' : 'Draft'}
+                    td.table-actions
+                      a.btn.btn--sm.btn--ghost(href=`/courses/${course.slug}`) View
+                      a.btn.btn--sm.btn--primary(href=`/courses/${course._id}/edit`) Edit
+        else
+          .dashboard__empty
+            p.empty-icon 🎓
+            h3 No courses yet
+            p Create your first course and start teaching!
+            a.btn.btn--primary(href='/courses/new') New Course
+
+block scripts
+  script(src='/js/dashboard.js')

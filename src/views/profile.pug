@@ -1,0 +1,146 @@
+extends base
+
+block content
+  .dashboard
+    //- Sidebar
+    .dashboard__sidebar
+      .dashboard__profile
+        img.dashboard__avatar(src=`/img/${user.photo}`, alt=user.name)
+        h3 #{user.name}
+        span.badge.badge--role #{user.role}
+
+      nav.dashboard__nav
+        if user.role === 'student'
+          a.dashboard__nav-item(href='/dashboard')
+            i.bi.bi-grid-1x2
+            span  My Learning
+          a.dashboard__nav-item(href='/courses')
+            i.bi.bi-search
+            span  Browse Courses
+        else if user.role === 'instructor'
+          a.dashboard__nav-item(href='/dashboard')
+            i.bi.bi-grid-1x2
+            span  My Courses
+        a.dashboard__nav-item.active(href='/profile')
+          i.bi.bi-person
+          span  Profile
+        a.dashboard__nav-item(href='#', id='logout-btn')
+          i.bi.bi-box-arrow-right
+          span  Log Out
+
+    //- Main 
+    .dashboard__main
+      h1.dashboard__title Profile Settings
+
+      //- Account Settings
+      .profile-card
+        .profile-card__header
+          h2.profile-card__title
+            i.bi.bi-person-circle
+            |  Account Settings
+        
+        #account-alert
+
+        .profile-photo-section
+          .profile-photo-wrapper
+            img.profile-photo-preview#photo-preview(src=`/img/${user.photo}`, alt=user.name)
+            label.profile-photo-overlay(for='photo-input')
+              i.bi.bi-camera-fill
+              span Change Photo
+          input#photo-input(type='file', accept='image/*', hidden)
+          p.profile-photo-hint JPG or PNG · Max 2MB
+
+        .profile-form
+          .profile-form__row
+            .form-group
+              label(for='name') Full Name
+              input.form-input#name(
+                type='text',
+                value=user.name,
+                placeholder='Your full name',
+                autocomplete='name'
+              )
+            .form-group
+              label(for='email') Email Address
+              input.form-input#email(
+                type='email',
+                value=user.email,
+                placeholder='your@email.com',
+                autocomplete='email'
+              )
+
+          .form-group
+            label(for='bio') Bio
+            textarea.form-input#bio(
+              rows='3',
+              placeholder='Tell students a bit about yourself…',
+              style='resize:vertical;'
+            ) #{user.bio || ''}
+
+          button.btn.btn--primary#save-account-btn
+            i.bi.bi-check-lg
+            span  Save Changes
+
+      //- Password Change
+      .profile-card
+        .profile-card__header
+          h2.profile-card__title
+            i.bi.bi-shield-lock
+            |  Change Password
+
+        #password-alert
+
+        .profile-form
+          .form-group
+            label(for='passwordCurrent') Current Password
+            .input-wrapper
+              input.form-input#passwordCurrent(
+                type='password',
+                placeholder='Enter your current password',
+                autocomplete='current-password'
+              )
+              button.input-toggle(type='button', data-target='passwordCurrent')
+                i.bi.bi-eye
+
+          .form-group
+            label(for='password') New Password
+            .input-wrapper
+              input.form-input#password(
+                type='password',
+                placeholder='Min. 8 characters — uppercase, lowercase & number',
+                autocomplete='new-password',
+                minlength='8'
+              )
+              button.input-toggle(type='button', data-target='password')
+                i.bi.bi-eye
+
+          .form-group
+            label(for='passwordConfirm') Confirm New Password
+            .input-wrapper
+              input.form-input#passwordConfirm(
+                type='password',
+                placeholder='Repeat your new password',
+                autocomplete='new-password',
+                minlength='8'
+              )
+              button.input-toggle(type='button', data-target='passwordConfirm')
+                i.bi.bi-eye
+
+          button.btn.btn--primary#save-password-btn
+            i.bi.bi-lock
+            span  Update Password
+
+block scripts
+  script(src='/js/profile.js')
+      .profile-card.profile-card--danger
+        .profile-card__header
+          h2.profile-card__title(style='color:#dc2626;')
+            i.bi.bi-exclamation-triangle
+            |  Danger Zone
+
+        .profile-form
+          .form-group
+            p(style='color:var(--color-text-muted);font-size:.93rem;') Deactivating your account will immediately sign you out and hide your profile. Your data is kept but you will no longer be able to log in.
+            button.btn.btn--danger#delete-account-btn
+              i.bi.bi-trash3
+              span  Deactivate My Account
