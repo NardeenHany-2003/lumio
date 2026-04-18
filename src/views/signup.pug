@@ -1,0 +1,55 @@
+extends base
+
+block content
+  .auth-page
+    .auth-card
+      .auth-card__brand
+        a(href='/') 💡 Lumio
+      h1.auth-card__title Create your account
+      p.auth-card__subtitle Start learning or teaching today — it's free.
+
+      #alert-box
+
+      .auth-form
+        .form-group
+          label(for='name') Full Name
+          input.form-input#name(type='text', placeholder='Jane Doe', autocomplete='name', required)
+
+        .form-group
+          label(for='email') Email address
+          input.form-input#email(type='email', placeholder='you@example.com', autocomplete='email', required)
+
+        .form-group
+          label I want to join as
+          .role-toggle
+            input(type='radio', name='role', id='role-student', value='student', checked)
+            label.role-toggle__option(for='role-student')
+              i.bi.bi-mortarboard
+              span  Student
+            input(type='radio', name='role', id='role-instructor', value='instructor')
+            label.role-toggle__option(for='role-instructor')
+              i.bi.bi-person-video2
+              span  Instructor
+
+        .form-group
+          label(for='password') Password
+          .input-wrapper
+            input.form-input#password(type='password', placeholder='Min. 8 characters', autocomplete='new-password', required)
+            button.input-toggle(type='button', data-target='password')
+              i.bi.bi-eye
+          p.form-hint Must include uppercase, lowercase, and a number.
+
+        .form-group
+          label(for='passwordConfirm') Confirm Password
+          .input-wrapper
+            input.form-input#passwordConfirm(type='password', placeholder='Repeat password', required)
+            button.input-toggle(type='button', data-target='passwordConfirm')
+              i.bi.bi-eye
+        
+        button.btn.btn--primary.btn--block#signup-btn
+          span Create Account
+          span.btn__spinner(hidden) ⏳
+
+      .auth-card__footer
+        p Already have an account?
+          a.form-link(href='/login')  Log in

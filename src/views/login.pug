@@ -1,0 +1,33 @@
+extends base
+
+block content
+  .auth-page
+    .auth-card
+      .auth-card__brand
+        a(href='/') 💡 Lumio
+      h1.auth-card__title Welcome back
+      p.auth-card__subtitle Log in to continue your learning journey.
+
+      #alert-box
+
+      .auth-form
+        .form-group
+          label(for='email') Email address
+          input.form-input#email(type='email', placeholder='you@example.com', autocomplete='email', required)
+
+        .form-group
+          .form-group__header
+            label(for='password') Password
+            a.form-link(href='/forgot-password') Forgot password?
+          .input-wrapper
+            input.form-input#password(type='password', placeholder='••••••••', autocomplete='current-password', required)
+            button.input-toggle(type='button', data-target='password')
+              i.bi.bi-eye
+
+        button.btn.btn--primary.btn--block#login-btn
+          span Log In
+          span.btn__spinner(hidden) ⏳
+
+      .auth-card__footer
+        p Don't have an account?
+          a.form-link(href='/signup')  Sign up for free
