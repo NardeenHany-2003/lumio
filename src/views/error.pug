@@ -1,0 +1,9 @@
+extends base
+
+block content
+  .error-page
+    .error-page__content
+      p.error-page__code 💥
+      h1.error-page__title Oops! Something went wrong.
+      p.error-page__message #{message}
+      a.btn.btn--primary(href='/') Go Back Home
