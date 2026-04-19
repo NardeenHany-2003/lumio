@@ -7,7 +7,7 @@ import * as factory from '../utils/handlerFactory.js';
 import {
   setLessonFilter,
   checkCommentOwnership,
-} from '../middleware/resource/commentMiddleware.js';
+} from '../middleware/commentMiddleware.js';
 
 // GET ALL COMMENTS FOR A LESSON — factory
 export const getLessonComments = factory.getAll(Comment, 'comments');

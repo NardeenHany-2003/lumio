@@ -9,7 +9,7 @@ import {
   setInstructor,
   processThumbnail,
   filterCourseUpdate,
-} from '../middleware/resource/courseMiddleware.js';
+} from '../middleware/courseMiddleware.js';
 
 // GET ALL COURSES  (with filter/sort/search/paginate)
 export const getAllCourses = catchAsync(async (req, res, next) => {

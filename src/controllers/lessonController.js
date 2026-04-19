@@ -4,7 +4,7 @@ import Enrollment from '../models/enrollmentModel.js';
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
 import * as factory from '../utils/handlerFactory.js';
-import { checkLessonOwnership } from '../middleware/resource/lessonMiddleware.js';
+import { checkLessonOwnership } from '../middleware/lessonMiddleware.js';
 
 // Helper used by create/update — verify course ownership
 const assertCourseOwner = async (courseId, userId, userRole) => {

@@ -16,7 +16,7 @@ import {
   setInstructor,
   filterCourseUpdate,
   processThumbnail,
-} from '../middleware/resource/courseMiddleware.js';
+} from '../middleware/courseMiddleware.js';
 import {
   protect,
   restrictTo,

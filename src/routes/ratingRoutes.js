@@ -8,7 +8,7 @@ import {
 import {
   setCourseFilter,
   checkRatingOwnership,
-} from '../middleware/resource/ratingMiddleware.js';
+} from '../middleware/ratingMiddleware.js';
 import { protect, restrictTo } from '../middleware/authMiddleware.js';
 import validate from '../middleware/validateMiddleware.js';
 import {

@@ -6,7 +6,7 @@ import {
   updateLesson,
   deleteLesson,
 } from '../controllers/lessonController.js';
-import { checkLessonOwnership } from '../middleware/resource/lessonMiddleware.js';
+import { checkLessonOwnership } from '../middleware/lessonMiddleware.js';
 import {
   protect,
   restrictTo,

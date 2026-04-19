@@ -7,7 +7,7 @@ import * as factory from '../utils/handlerFactory.js';
 import {
   setCourseFilter,
   checkRatingOwnership,
-} from '../middleware/resource/ratingMiddleware.js';
+} from '../middleware/ratingMiddleware.js';
 
 // GET ALL RATINGS FOR A COURSE — factory
 export const getCourseRatings = factory.getAll(Rating, 'ratings');

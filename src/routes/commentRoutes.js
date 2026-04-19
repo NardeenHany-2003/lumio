@@ -8,7 +8,7 @@ import {
 import {
   setLessonFilter,
   checkCommentOwnership,
-} from '../middleware/resource/commentMiddleware.js';
+} from '../middleware/commentMiddleware.js';
 import { protect, isLoggedIn } from '../middleware/authMiddleware.js';
 import validate from '../middleware/validateMiddleware.js';
 import {
