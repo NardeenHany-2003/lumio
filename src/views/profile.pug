@@ -28,7 +28,7 @@ block content
           i.bi.bi-box-arrow-right
           span  Log Out
 
-    //- Main 
+    //- Main
     .dashboard__main
       h1.dashboard__title Profile Settings
 
@@ -38,7 +38,7 @@ block content
           h2.profile-card__title
             i.bi.bi-person-circle
             |  Account Settings
-        
+
         #account-alert
 
         .profile-photo-section
@@ -130,8 +130,7 @@ block content
             i.bi.bi-lock
             span  Update Password
 
-block scripts
-  script(src='/js/profile.js')
+      //- Danger Zone
       .profile-card.profile-card--danger
         .profile-card__header
           h2.profile-card__title(style='color:#dc2626;')
@@ -144,3 +143,6 @@ block scripts
             button.btn.btn--danger#delete-account-btn
               i.bi.bi-trash3
               span  Deactivate My Account
+
+block scripts
+  script(src='/js/profile.js')
