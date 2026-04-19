@@ -2,10 +2,11 @@ import Course from '../models/courseModel.js';
 import Enrollment from '../models/enrollmentModel.js';
 import Lesson from '../models/lessonModel.js';
 import Progress from '../models/progressModel.js';
+import Booking from '../models/bookingModel.js';
 import catchAsync from '../utils/catchAsync.js';
 import { CATEGORIES, LEVELS } from '../models/courseModel.js';
 
-// HOME
+//  HOME
 export const getHome = catchAsync(async (req, res) => {
   const featuredCourses = await Course.find({ isPublished: true })
     .sort('-ratingsAverage -totalStudents')
@@ -30,14 +31,14 @@ export const getHome = catchAsync(async (req, res) => {
   });
 });
 
-// COURSES LISTING
+//  COURSES LISTING
 export const getCourses = (req, res) => {
   res.status(200).render('courses', {
     title: 'All Courses — Lumio',
   });
 };
 
-// COURSE DETAIL
+//  COURSE DETAIL
 export const getCourseDetail = catchAsync(async (req, res, next) => {
   const course = await Course.findOne({
     slug: req.params.slug,
@@ -51,14 +52,29 @@ export const getCourseDetail = catchAsync(async (req, res, next) => {
     });
   }
 
-  // Post-Stripe redirect
+  // Post-Stripe redirect: create enrollment + booking then clean the URL
   if (req.query.enrolled === 'true' && req.user) {
     const existing = await Enrollment.findOne({
       student: req.user.id,
       course: course._id,
     });
     if (!existing) {
+      // Create enrollment
       await Enrollment.create({ student: req.user.id, course: course._id });
+
+      // Create booking record for audit trail (dev workaround — webhook handles prod)
+      const alreadyBooked = await Booking.findOne({
+        user: req.user.id,
+        course: course._id,
+      });
+      if (!alreadyBooked) {
+        await Booking.create({
+          course: course._id,
+          user: req.user.id,
+          price: course.price,
+          paid: true,
+        });
+      }
     }
     return res.redirect(302, `/courses/${req.params.slug}`);
   }
@@ -79,7 +95,7 @@ export const getCourseDetail = catchAsync(async (req, res, next) => {
   });
 });
 
-// EDIT COURSE PAGE
+//  EDIT COURSE PAGE
 export const getEditCourse = catchAsync(async (req, res, next) => {
   const course = await Course.findById(req.params.id).populate({
     path: 'lessons',
@@ -112,7 +128,7 @@ export const getEditCourse = catchAsync(async (req, res, next) => {
   });
 });
 
-// LESSON PLAYER
+//  LESSON PLAYER
 export const getLessonPlayer = catchAsync(async (req, res, next) => {
   const lesson = await Lesson.findById(req.params.id).populate(
     'course',
@@ -166,19 +182,19 @@ export const getLessonPlayer = catchAsync(async (req, res, next) => {
   });
 });
 
-// LOGIN PAGE
+//  LOGIN PAGE
 export const getLogin = (req, res) => {
   if (res.locals.user) return res.redirect('/dashboard');
   res.status(200).render('login', { title: 'Log In — Lumio' });
 };
 
-// SIGNUP PAGE
+//  SIGNUP PAGE
 export const getSignup = (req, res) => {
   if (res.locals.user) return res.redirect('/dashboard');
   res.status(200).render('signup', { title: 'Create Account — Lumio' });
 };
 
-// DASHBOARD
+//  DASHBOARD
 export const getDashboard = catchAsync(async (req, res) => {
   let data = {};
 
@@ -198,12 +214,12 @@ export const getDashboard = catchAsync(async (req, res) => {
   res.status(200).render('dashboard', { title: 'Dashboard — Lumio', ...data });
 });
 
-// PROFILE PAGE
+//  PROFILE PAGE
 export const getProfile = (req, res) => {
   res.status(200).render('profile', { title: 'Profile Settings — Lumio' });
 };
 
-// CREATE COURSE PAGE
+//  CREATE COURSE PAGE
 export const getCreateCourse = (req, res) => {
   res.status(200).render('createCourse', {
     title: 'New Course — Lumio',
@@ -212,7 +228,7 @@ export const getCreateCourse = (req, res) => {
   });
 };
 
-// FORGOT PASSWORD PAGE
+//  FORGOT PASSWORD PAGE
 export const getForgotPassword = (req, res) => {
   if (res.locals.user) return res.redirect('/dashboard');
   res
@@ -220,7 +236,7 @@ export const getForgotPassword = (req, res) => {
     .render('forgotPassword', { title: 'Forgot Password — Lumio' });
 };
 
-// RESET PASSWORD PAGE
+//  RESET PASSWORD PAGE
 export const getResetPassword = (req, res) => {
   res.status(200).render('resetPassword', {
     title: 'Reset Password — Lumio',

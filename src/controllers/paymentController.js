@@ -112,9 +112,9 @@ const createEnrollmentAfterPayment = async (session) => {
   // Create booking record for audit trail
   await Booking.create({
     course: courseId,
-    user:   userId,
-    price:  session.amount_total / 100, // convert back from cents
-    paid:   true,
+    user: userId,
+    price: session.amount_total / 100, // convert back from cents
+    paid: true,
   });
 
   console.log(
@@ -129,7 +129,7 @@ export const webhookCheckout = async (req, res, next) => {
   let event;
   try {
     event = getStripe().webhooks.constructEvent(
-      req.body, 
+      req.body,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET,
     );
