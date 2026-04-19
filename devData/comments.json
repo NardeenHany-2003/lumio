@@ -1,0 +1,42 @@
+[
+  {
+    "_id": "64f000000000000000000001",
+    "user": "64a000000000000000000004",
+    "lesson": "64c000000000000000000002",
+    "course": "64b000000000000000000001",
+    "text": "The event loop explanation finally clicked for me here. I had watched 5 other videos and none of them made it this clear. Thank you!",
+    "isEdited": false
+  },
+  {
+    "_id": "64f000000000000000000002",
+    "user": "64a000000000000000000005",
+    "lesson": "64c000000000000000000002",
+    "course": "64b000000000000000000001",
+    "text": "Can you share the diagram you used around the 10 minute mark? I would love to use it as a reference while coding.",
+    "isEdited": false
+  },
+  {
+    "_id": "64f000000000000000000003",
+    "user": "64a000000000000000000006",
+    "lesson": "64c000000000000000000003",
+    "course": "64b000000000000000000001",
+    "text": "I was confused about middleware chaining at first but the order of operations example made it crystal clear. Well structured lesson.",
+    "isEdited": false
+  },
+  {
+    "_id": "64f000000000000000000004",
+    "user": "64a000000000000000000004",
+    "lesson": "64c000000000000000000006",
+    "course": "64b000000000000000000002",
+    "text": "The custom hooks pattern is so powerful. I refactored my entire data fetching logic into a useFetch hook and it cleaned up my components massively.",
+    "isEdited": false
+  },
+  {
+    "_id": "64f000000000000000000005",
+    "user": "64a000000000000000000005",
+    "lesson": "64c000000000000000000009",
+    "course": "64b000000000000000000003",
+    "text": "The groupby section is incredibly useful. Spent a lot of time with this in my job last week and your explanation made everything much clearer.",
+    "isEdited": false
+  }
+]

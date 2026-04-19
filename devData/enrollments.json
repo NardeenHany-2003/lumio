@@ -1,0 +1,57 @@
+[
+  {
+    "_id": "64d000000000000000000001",
+    "student": "64a000000000000000000004",
+    "course": "64b000000000000000000001",
+    "progressPercent": 75,
+    "isCompleted": false,
+    "enrolledAt": "2024-01-15T10:00:00.000Z",
+    "lastAccessedAt": "2024-02-01T14:30:00.000Z"
+  },
+  {
+    "_id": "64d000000000000000000002",
+    "student": "64a000000000000000000005",
+    "course": "64b000000000000000000001",
+    "progressPercent": 100,
+    "isCompleted": true,
+    "enrolledAt": "2024-01-10T08:00:00.000Z",
+    "completedAt": "2024-02-05T16:00:00.000Z",
+    "lastAccessedAt": "2024-02-05T16:00:00.000Z"
+  },
+  {
+    "_id": "64d000000000000000000003",
+    "student": "64a000000000000000000006",
+    "course": "64b000000000000000000001",
+    "progressPercent": 25,
+    "isCompleted": false,
+    "enrolledAt": "2024-02-01T09:00:00.000Z",
+    "lastAccessedAt": "2024-02-03T11:00:00.000Z"
+  },
+  {
+    "_id": "64d000000000000000000004",
+    "student": "64a000000000000000000004",
+    "course": "64b000000000000000000002",
+    "progressPercent": 66,
+    "isCompleted": false,
+    "enrolledAt": "2024-01-20T10:00:00.000Z",
+    "lastAccessedAt": "2024-02-10T13:00:00.000Z"
+  },
+  {
+    "_id": "64d000000000000000000005",
+    "student": "64a000000000000000000005",
+    "course": "64b000000000000000000002",
+    "progressPercent": 33,
+    "isCompleted": false,
+    "enrolledAt": "2024-01-25T11:00:00.000Z",
+    "lastAccessedAt": "2024-02-08T10:00:00.000Z"
+  },
+  {
+    "_id": "64d000000000000000000006",
+    "student": "64a000000000000000000006",
+    "course": "64b000000000000000000003",
+    "progressPercent": 33,
+    "isCompleted": false,
+    "enrolledAt": "2024-02-05T09:00:00.000Z",
+    "lastAccessedAt": "2024-02-06T12:00:00.000Z"
+  }
+]

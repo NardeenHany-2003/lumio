@@ -1,0 +1,62 @@
+[
+  {
+    "_id": "64a000000000000000000001",
+    "name": "Nardeen Admin",
+    "email": "admin@lumio.com",
+    "password": "Test1234!",
+    "passwordConfirm": "Test1234!",
+    "role": "admin",
+    "bio": "Platform administrator.",
+    "photo": "default.jpg"
+  },
+  {
+    "_id": "64a000000000000000000002",
+    "name": "Ahmed Saber",
+    "email": "ahmed@lumio.com",
+    "password": "Test1234!",
+    "passwordConfirm": "Test1234!",
+    "role": "instructor",
+    "bio": "Full-stack developer with 8 years of experience in Node.js, React, and MongoDB. Passionate about teaching clean, production-ready code.",
+    "photo": "default.jpg"
+  },
+  {
+    "_id": "64a000000000000000000003",
+    "name": "Sara Mohamed",
+    "email": "sara@lumio.com",
+    "password": "Test1234!",
+    "passwordConfirm": "Test1234!",
+    "role": "instructor",
+    "bio": "UI/UX designer and frontend developer specializing in React and CSS animations.",
+    "photo": "default.jpg"
+  },
+  {
+    "_id": "64a000000000000000000004",
+    "name": "Omar Khalil",
+    "email": "omar@lumio.com",
+    "password": "Test1234!",
+    "passwordConfirm": "Test1234!",
+    "role": "student",
+    "bio": "Junior developer looking to level up.",
+    "photo": "default.jpg"
+  },
+  {
+    "_id": "64a000000000000000000005",
+    "name": "Layla Hassan",
+    "email": "layla@lumio.com",
+    "password": "Test1234!",
+    "passwordConfirm": "Test1234!",
+    "role": "student",
+    "bio": "Computer science student interested in web development.",
+    "photo": "default.jpg"
+  },
+  {
+    "_id": "64a000000000000000000006",
+    "name": "Youssef Nour",
+    "email": "youssef@lumio.com",
+    "password": "Test1234!",
+    "passwordConfirm": "Test1234!",
+    "role": "student",
+    "bio": "Self-taught programmer passionate about open source.",
+    "photo": "default.jpg"
+  }
+]

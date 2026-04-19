@@ -1,0 +1,98 @@
+[
+  {
+    "student": "64a000000000000000000004",
+    "lesson": "64c000000000000000000001",
+    "course": "64b000000000000000000001",
+    "isCompleted": true,
+    "watchedDuration": 900,
+    "completedAt": "2024-01-15T11:00:00.000Z"
+  },
+  {
+    "student": "64a000000000000000000004",
+    "lesson": "64c000000000000000000002",
+    "course": "64b000000000000000000001",
+    "isCompleted": true,
+    "watchedDuration": 1500,
+    "completedAt": "2024-01-16T14:00:00.000Z"
+  },
+  {
+    "student": "64a000000000000000000004",
+    "lesson": "64c000000000000000000003",
+    "course": "64b000000000000000000001",
+    "isCompleted": true,
+    "watchedDuration": 2100,
+    "completedAt": "2024-01-18T16:00:00.000Z"
+  },
+  {
+    "student": "64a000000000000000000005",
+    "lesson": "64c000000000000000000001",
+    "course": "64b000000000000000000001",
+    "isCompleted": true,
+    "watchedDuration": 900,
+    "completedAt": "2024-01-11T09:00:00.000Z"
+  },
+  {
+    "student": "64a000000000000000000005",
+    "lesson": "64c000000000000000000002",
+    "course": "64b000000000000000000001",
+    "isCompleted": true,
+    "watchedDuration": 1500,
+    "completedAt": "2024-01-12T10:00:00.000Z"
+  },
+  {
+    "student": "64a000000000000000000005",
+    "lesson": "64c000000000000000000003",
+    "course": "64b000000000000000000001",
+    "isCompleted": true,
+    "watchedDuration": 2100,
+    "completedAt": "2024-01-14T12:00:00.000Z"
+  },
+  {
+    "student": "64a000000000000000000005",
+    "lesson": "64c000000000000000000004",
+    "course": "64b000000000000000000001",
+    "isCompleted": true,
+    "watchedDuration": 1200,
+    "completedAt": "2024-02-05T16:00:00.000Z"
+  },
+  {
+    "student": "64a000000000000000000006",
+    "lesson": "64c000000000000000000001",
+    "course": "64b000000000000000000001",
+    "isCompleted": true,
+    "watchedDuration": 900,
+    "completedAt": "2024-02-01T10:00:00.000Z"
+  },
+  {
+    "student": "64a000000000000000000004",
+    "lesson": "64c000000000000000000005",
+    "course": "64b000000000000000000002",
+    "isCompleted": true,
+    "watchedDuration": 1200,
+    "completedAt": "2024-01-21T11:00:00.000Z"
+  },
+  {
+    "student": "64a000000000000000000004",
+    "lesson": "64c000000000000000000006",
+    "course": "64b000000000000000000002",
+    "isCompleted": true,
+    "watchedDuration": 1800,
+    "completedAt": "2024-01-25T15:00:00.000Z"
+  },
+  {
+    "student": "64a000000000000000000005",
+    "lesson": "64c000000000000000000005",
+    "course": "64b000000000000000000002",
+    "isCompleted": true,
+    "watchedDuration": 1200,
+    "completedAt": "2024-01-26T09:00:00.000Z"
+  },
+  {
+    "student": "64a000000000000000000006",
+    "lesson": "64c000000000000000000008",
+    "course": "64b000000000000000000003",
+    "isCompleted": true,
+    "watchedDuration": 1200,
+    "completedAt": "2024-02-05T10:00:00.000Z"
+  }
+]

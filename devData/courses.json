@@ -1,0 +1,154 @@
+[
+  {
+    "_id": "64b000000000000000000001",
+    "title": "Complete Node.js Bootcamp",
+    "slug": "complete-nodejs-bootcamp",
+    "description": "Master Node.js from the ground up. This course covers Express, MongoDB, Mongoose, REST APIs, authentication with JWT, file uploads with Multer, email sending, Stripe payments, and deployment. Based on real-world production patterns used by senior developers.",
+    "summary": "Go from zero to production-ready Node.js developer in one course.",
+    "instructor": "64a000000000000000000002",
+    "category": "Web Development",
+    "level": "Beginner",
+    "price": 49.99,
+    "thumbnail": "course-nodejs.jpg",
+    "tags": [
+      "nodejs",
+      "express",
+      "mongodb",
+      "rest-api",
+      "jwt",
+      "backend"
+    ],
+    "requirements": [
+      "Basic JavaScript knowledge (variables, functions, arrays)",
+      "Familiarity with HTML and CSS",
+      "A computer with internet access"
+    ],
+    "whatYouLearn": [
+      "Build fast, scalable REST APIs with Node.js and Express",
+      "Work with MongoDB and Mongoose for data modeling",
+      "Implement JWT authentication with access and refresh tokens",
+      "Handle file uploads and process images",
+      "Send transactional emails with Nodemailer",
+      "Integrate Stripe for real payment processing",
+      "Deploy your app to production"
+    ],
+    "ratingsAverage": 4.8,
+    "ratingsQuantity": 3,
+    "totalStudents": 3,
+    "totalLessons": 4,
+    "totalDuration": 95,
+    "isPublished": true
+  },
+  {
+    "_id": "64b000000000000000000002",
+    "title": "React & Tailwind CSS Masterclass",
+    "slug": "react-tailwind-masterclass",
+    "description": "Build beautiful, responsive web applications with React 18 and Tailwind CSS. Learn component architecture, hooks, state management with Zustand, React Router, and how to style everything with utility-first CSS. Includes three complete portfolio projects.",
+    "summary": "Build stunning UIs with React and Tailwind CSS — beginner to advanced.",
+    "instructor": "64a000000000000000000003",
+    "category": "Web Development",
+    "level": "Intermediate",
+    "price": 39.99,
+    "thumbnail": "course-react.jpg",
+    "tags": [
+      "react",
+      "tailwindcss",
+      "frontend",
+      "javascript",
+      "hooks"
+    ],
+    "requirements": [
+      "Solid understanding of JavaScript (ES6+)",
+      "Basic HTML and CSS knowledge",
+      "Node.js installed on your computer"
+    ],
+    "whatYouLearn": [
+      "Build production-grade React applications from scratch",
+      "Master React hooks — useState, useEffect, useContext, useReducer",
+      "Style efficiently with Tailwind CSS utility classes",
+      "Manage global state with Zustand",
+      "Implement client-side routing with React Router v6",
+      "Build and deploy three complete portfolio projects"
+    ],
+    "ratingsAverage": 4.6,
+    "ratingsQuantity": 2,
+    "totalStudents": 2,
+    "totalLessons": 3,
+    "totalDuration": 70,
+    "isPublished": true
+  },
+  {
+    "_id": "64b000000000000000000003",
+    "title": "Python for Data Science & Machine Learning",
+    "slug": "python-data-science-ml",
+    "description": "Learn Python for data analysis, visualization, and machine learning. This course covers NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, and an introduction to deep learning with TensorFlow. Hands-on with real datasets throughout.",
+    "summary": "From Python basics to machine learning models — one complete course.",
+    "instructor": "64a000000000000000000002",
+    "category": "Data Science & ML",
+    "level": "Beginner",
+    "price": 0,
+    "thumbnail": "course-python.jpg",
+    "tags": [
+      "python",
+      "machine-learning",
+      "data-science",
+      "pandas",
+      "scikit-learn"
+    ],
+    "requirements": [
+      "No prior programming experience required",
+      "Basic mathematics (algebra) is helpful"
+    ],
+    "whatYouLearn": [
+      "Write Python from scratch — variables, loops, functions, OOP",
+      "Manipulate data with NumPy and Pandas",
+      "Visualize insights with Matplotlib and Seaborn",
+      "Build and evaluate ML models with Scikit-learn",
+      "Introduction to neural networks with TensorFlow"
+    ],
+    "ratingsAverage": 4.5,
+    "ratingsQuantity": 1,
+    "totalStudents": 1,
+    "totalLessons": 3,
+    "totalDuration": 60,
+    "isPublished": true
+  },
+  {
+    "_id": "64b000000000000000000004",
+    "title": "React Native Mobile Development",
+    "slug": "react-native-mobile-dev",
+    "description": "Build iOS and Android apps with React Native and Expo. This course takes you from setting up your development environment to publishing apps on the App Store and Google Play. Covers navigation, animations, camera, push notifications, and AsyncStorage.",
+    "summary": "Ship mobile apps for iOS and Android using your React skills.",
+    "instructor": "64a000000000000000000003",
+    "category": "Mobile Development",
+    "level": "Intermediate",
+    "price": 59.99,
+    "thumbnail": "course-react-native.jpg",
+    "tags": [
+      "react-native",
+      "expo",
+      "mobile",
+      "ios",
+      "android"
+    ],
+    "requirements": [
+      "Familiarity with React (hooks, components)",
+      "JavaScript ES6+ knowledge",
+      "A smartphone for testing (or use the simulator)"
+    ],
+    "whatYouLearn": [
+      "Build cross-platform mobile apps with React Native and Expo",
+      "Implement navigation with React Navigation v6",
+      "Style with StyleSheet and NativeWind (Tailwind for RN)",
+      "Access native device features — camera, location, notifications",
+      "Manage offline data with AsyncStorage",
+      "Publish your app to App Store and Google Play"
+    ],
+    "ratingsAverage": 0,
+    "ratingsQuantity": 0,
+    "totalStudents": 0,
+    "totalLessons": 2,
+    "totalDuration": 45,
+    "isPublished": false
+  }
+]

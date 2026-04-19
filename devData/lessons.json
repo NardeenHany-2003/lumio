@@ -1,0 +1,122 @@
+[
+  {
+    "_id": "64c000000000000000000001",
+    "title": "Welcome & Course Overview",
+    "course": "64b000000000000000000001",
+    "content": "Welcome to the Complete Node.js Bootcamp! In this lesson we will go over everything you will build and learn throughout the course. We will set up our development environment and write our very first Node.js program.",
+    "videoPath": "",
+    "duration": 15,
+    "order": 1,
+    "isFree": true
+  },
+  {
+    "_id": "64c000000000000000000002",
+    "title": "How Node.js Works — Event Loop & Non-Blocking I/O",
+    "course": "64b000000000000000000001",
+    "content": "Understand the core of Node.js — the event loop, libuv, the thread pool, and how non-blocking I/O makes Node.js fast. We compare Node.js to traditional multi-threaded servers and see why it excels at I/O-heavy applications.",
+    "videoPath": "",
+    "duration": 25,
+    "order": 2,
+    "isFree": false
+  },
+  {
+    "_id": "64c000000000000000000003",
+    "title": "Building a REST API with Express",
+    "course": "64b000000000000000000001",
+    "content": "Build a fully functional REST API step by step. We cover Express routing, middleware, request/response cycle, error handling, and MVC architecture. By the end you will have a real API you can extend.",
+    "videoPath": "",
+    "duration": 35,
+    "order": 3,
+    "isFree": false
+  },
+  {
+    "_id": "64c000000000000000000004",
+    "title": "MongoDB & Mongoose — Data Modelling",
+    "course": "64b000000000000000000001",
+    "content": "Connect your API to MongoDB using Mongoose. Learn schemas, models, validators, middleware hooks, virtuals, and population. We model a real-world application with relationships between documents.",
+    "videoPath": "",
+    "duration": 20,
+    "order": 4,
+    "isFree": false
+  },
+  {
+    "_id": "64c000000000000000000005",
+    "title": "React Fundamentals — JSX, Props & State",
+    "course": "64b000000000000000000002",
+    "content": "Get started with React 18. We cover JSX syntax, functional components, props for passing data, useState for local state, and how to think in components. You will build your first interactive UI.",
+    "videoPath": "",
+    "duration": 20,
+    "order": 1,
+    "isFree": true
+  },
+  {
+    "_id": "64c000000000000000000006",
+    "title": "Hooks Deep Dive — useEffect, useContext & Custom Hooks",
+    "course": "64b000000000000000000002",
+    "content": "Master React hooks. We cover useEffect for side effects and data fetching, useContext and the Context API for global state, and how to write your own custom hooks to share logic between components.",
+    "videoPath": "",
+    "duration": 30,
+    "order": 2,
+    "isFree": false
+  },
+  {
+    "_id": "64c000000000000000000007",
+    "title": "Styling with Tailwind CSS",
+    "course": "64b000000000000000000002",
+    "content": "Style your React components with Tailwind CSS. We cover the utility-first approach, responsive design, dark mode, hover and focus states, and how to extract reusable component styles with @apply.",
+    "videoPath": "",
+    "duration": 20,
+    "order": 3,
+    "isFree": false
+  },
+  {
+    "_id": "64c000000000000000000008",
+    "title": "Python Basics — Variables, Functions & Loops",
+    "course": "64b000000000000000000003",
+    "content": "Start your Python journey. We cover variables and data types, control flow with if/else and loops, defining functions, list comprehensions, and Python's clean readable syntax. No prior experience needed.",
+    "videoPath": "",
+    "duration": 20,
+    "order": 1,
+    "isFree": true
+  },
+  {
+    "_id": "64c000000000000000000009",
+    "title": "Data Analysis with Pandas",
+    "course": "64b000000000000000000003",
+    "content": "Learn Pandas for data manipulation. We cover loading CSV and Excel files, selecting and filtering data, handling missing values, groupby aggregations, merging dataframes, and exporting results.",
+    "videoPath": "",
+    "duration": 25,
+    "order": 2,
+    "isFree": false
+  },
+  {
+    "_id": "64c00000000000000000000a",
+    "title": "Your First Machine Learning Model",
+    "course": "64b000000000000000000003",
+    "content": "Build and evaluate your first ML model with Scikit-learn. We cover the ML workflow — feature engineering, train/test split, model training, prediction, and evaluation metrics like accuracy and confusion matrix.",
+    "videoPath": "",
+    "duration": 15,
+    "order": 3,
+    "isFree": false
+  },
+  {
+    "_id": "64c00000000000000000000b",
+    "title": "React Native & Expo Setup",
+    "course": "64b000000000000000000004",
+    "content": "Set up your React Native development environment with Expo. We install the tools, create our first project, run it on a real device and simulator, and understand the Expo ecosystem.",
+    "videoPath": "",
+    "duration": 20,
+    "order": 1,
+    "isFree": true
+  },
+  {
+    "_id": "64c00000000000000000000c",
+    "title": "Navigation with React Navigation",
+    "course": "64b000000000000000000004",
+    "content": "Implement navigation in your mobile app with React Navigation v6. We cover stack navigator, tab navigator, drawer navigator, and passing parameters between screens.",
+    "videoPath": "",
+    "duration": 25,
+    "order": 2,
+    "isFree": false
+  }
+]

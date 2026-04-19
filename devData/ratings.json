@@ -1,0 +1,44 @@
+[
+  {
+    "_id": "64e000000000000000000001",
+    "user": "64a000000000000000000004",
+    "course": "64b000000000000000000001",
+    "rating": 5,
+    "review": "Absolutely the best Node.js course out there. Ahmed explains everything clearly and the projects are real-world quality. Highly recommend!"
+  },
+  {
+    "_id": "64e000000000000000000002",
+    "user": "64a000000000000000000005",
+    "course": "64b000000000000000000001",
+    "rating": 5,
+    "review": "I went from knowing nothing about backend development to building a full production API. The JWT auth and Stripe sections alone are worth the price."
+  },
+  {
+    "_id": "64e000000000000000000003",
+    "user": "64a000000000000000000006",
+    "course": "64b000000000000000000001",
+    "rating": 4,
+    "review": "Great course overall. Pace is perfect for beginners. Would love more exercises at the end of each section, but the explanations are very solid."
+  },
+  {
+    "_id": "64e000000000000000000004",
+    "user": "64a000000000000000000004",
+    "course": "64b000000000000000000002",
+    "rating": 5,
+    "review": "Sara is an amazing instructor. The Tailwind CSS section saved me so much time. My portfolio looks 10x better now."
+  },
+  {
+    "_id": "64e000000000000000000005",
+    "user": "64a000000000000000000005",
+    "course": "64b000000000000000000002",
+    "rating": 4,
+    "review": "Solid React course. The custom hooks section was especially helpful. Would be 5 stars with more content on testing."
+  },
+  {
+    "_id": "64e000000000000000000006",
+    "user": "64a000000000000000000006",
+    "course": "64b000000000000000000003",
+    "rating": 4,
+    "review": "Perfect for absolute beginners. Ahmed makes Python and data science feel approachable. The Pandas section is particularly well done."
+  }
+]
