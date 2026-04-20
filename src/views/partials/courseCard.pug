@@ -3,7 +3,6 @@
     img.course-card__thumb(src=`/img/${course.thumbnail}`, alt=course.title, loading='lazy')
     span.course-card__level #{course.level}
   .course-card__body
-    //- span.course-card__category #{course.category}
     a.course-card__title(href=`/courses/${course.slug}`) #{course.title}
     .course-card__meta
       .course-card__rating
@@ -13,8 +12,12 @@
       span #{course.totalStudents} students
     .course-card__footer
       .course-card__instructor
-        img(src=`/img/${course.instructor.photo}`, alt=course.instructor.name)
-        span #{course.instructor.name}
+        if course.instructor
+          img(src=`/img/${course.instructor.photo}`, alt=course.instructor.name)
+          span #{course.instructor.name}
+        else
+          img(src='/img/default.jpg', alt='Instructor')
+          span Lumio Instructor
       span.course-card__price
         if course.price === 0
           | Free

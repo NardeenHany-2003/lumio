@@ -8,12 +8,17 @@ import { CATEGORIES, LEVELS } from '../models/courseModel.js';
 
 //  HOME
 export const getHome = catchAsync(async (req, res) => {
-  const featuredCourses = await Course.find({ isPublished: true })
+  const allFeatured = await Course.find({ isPublished: true })
     .sort('-ratingsAverage -totalStudents')
-    .limit(6)
+    .limit(12)
     .select(
       'title slug thumbnail ratingsAverage totalStudents price category level instructor',
     );
+
+  // Filter out courses whose instructor account was deactivated
+  const featuredCourses = allFeatured
+    .filter((c) => c.instructor !== null)
+    .slice(0, 6);
 
   const categories = [
     'Web Development',
@@ -52,7 +57,7 @@ export const getCourseDetail = catchAsync(async (req, res, next) => {
     });
   }
 
-  // Post-Stripe redirect: create enrollment + booking then clean the URL
+  // Post-Stripe redirect: create enrollment + booking then clean the URL 
   if (req.query.enrolled === 'true' && req.user) {
     const existing = await Enrollment.findOne({
       student: req.user.id,
