@@ -6,9 +6,8 @@ import Booking from '../models/bookingModel.js';
 import catchAsync from '../utils/catchAsync.js';
 import { CATEGORIES, LEVELS } from '../models/courseModel.js';
 
-// ─────────────────────────────────────────────
+
 //  HOME
-// ─────────────────────────────────────────────
 export const getHome = catchAsync(async (req, res) => {
   const allFeatured = await Course.find({ isPublished: true })
     .sort('-ratingsAverage -totalStudents')
@@ -38,18 +37,14 @@ export const getHome = catchAsync(async (req, res) => {
   });
 });
 
-// ─────────────────────────────────────────────
 //  COURSES LISTING
-// ─────────────────────────────────────────────
 export const getCourses = (req, res) => {
   res.status(200).render('courses', {
     title: 'All Courses — Lumio',
   });
 };
 
-// ─────────────────────────────────────────────
 //  COURSE DETAIL
-// ─────────────────────────────────────────────
 export const getCourseDetail = catchAsync(async (req, res, next) => {
   const course = await Course.findOne({
     slug: req.params.slug,
@@ -106,9 +101,7 @@ export const getCourseDetail = catchAsync(async (req, res, next) => {
   });
 });
 
-// ─────────────────────────────────────────────
 //  EDIT COURSE PAGE
-// ─────────────────────────────────────────────
 export const getEditCourse = catchAsync(async (req, res, next) => {
   const course = await Course.findById(req.params.id).populate({
     path: 'lessons',
@@ -141,9 +134,7 @@ export const getEditCourse = catchAsync(async (req, res, next) => {
   });
 });
 
-// ─────────────────────────────────────────────
 //  LESSON PLAYER
-// ─────────────────────────────────────────────
 export const getLessonPlayer = catchAsync(async (req, res, next) => {
   const lesson = await Lesson.findById(req.params.id).populate(
     'course',
@@ -197,25 +188,19 @@ export const getLessonPlayer = catchAsync(async (req, res, next) => {
   });
 });
 
-// ─────────────────────────────────────────────
 //  LOGIN PAGE
-// ─────────────────────────────────────────────
 export const getLogin = (req, res) => {
   if (res.locals.user) return res.redirect('/dashboard');
   res.status(200).render('login', { title: 'Log In — Lumio' });
 };
 
-// ─────────────────────────────────────────────
 //  SIGNUP PAGE
-// ─────────────────────────────────────────────
 export const getSignup = (req, res) => {
   if (res.locals.user) return res.redirect('/dashboard');
   res.status(200).render('signup', { title: 'Create Account — Lumio' });
 };
 
-// ─────────────────────────────────────────────
 //  DASHBOARD
-// ─────────────────────────────────────────────
 export const getDashboard = catchAsync(async (req, res) => {
   let data = {};
 
@@ -235,16 +220,12 @@ export const getDashboard = catchAsync(async (req, res) => {
   res.status(200).render('dashboard', { title: 'Dashboard — Lumio', ...data });
 });
 
-// ─────────────────────────────────────────────
 //  PROFILE PAGE
-// ─────────────────────────────────────────────
 export const getProfile = (req, res) => {
   res.status(200).render('profile', { title: 'Profile Settings — Lumio' });
 };
 
-// ─────────────────────────────────────────────
 //  CREATE COURSE PAGE
-// ─────────────────────────────────────────────
 export const getCreateCourse = (req, res) => {
   res.status(200).render('createCourse', {
     title: 'New Course — Lumio',
@@ -253,9 +234,7 @@ export const getCreateCourse = (req, res) => {
   });
 };
 
-// ─────────────────────────────────────────────
 //  FORGOT PASSWORD PAGE
-// ─────────────────────────────────────────────
 export const getForgotPassword = (req, res) => {
   if (res.locals.user) return res.redirect('/dashboard');
   res
@@ -263,9 +242,7 @@ export const getForgotPassword = (req, res) => {
     .render('forgotPassword', { title: 'Forgot Password — Lumio' });
 };
 
-// ─────────────────────────────────────────────
 //  RESET PASSWORD PAGE
-// ─────────────────────────────────────────────
 export const getResetPassword = (req, res) => {
   res.status(200).render('resetPassword', {
     title: 'Reset Password — Lumio',
