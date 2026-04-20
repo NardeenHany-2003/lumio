@@ -11,7 +11,7 @@ import {
   filterCourseUpdate,
 } from '../middleware/courseMiddleware.js';
 
-//  GET ALL COURSES  (with filter/sort/search/paginate)
+// GET ALL COURSES  (with filter/sort/search/paginate)
 export const getAllCourses = catchAsync(async (req, res, next) => {
   const baseQuery  = Course.find({ isPublished: true });
   const countQuery = Course.find({ isPublished: true });
@@ -48,7 +48,7 @@ export const getAllCourses = catchAsync(async (req, res, next) => {
   });
 });
 
-//  GET ONE COURSE  (by id or slug)
+// GET ONE COURSE  (by id or slug)
 export const getCourse = catchAsync(async (req, res, next) => {
   const param    = req.params.id;
   const isObjId  = /^[a-fA-F0-9]{24}$/.test(param);
@@ -74,16 +74,16 @@ export const getCourse = catchAsync(async (req, res, next) => {
   });
 });
 
-//  CREATE COURSE
+// CREATE COURSE
 export const createCourse = factory.createOne(Course, 'course');
 
-//  UPDATE COURSE
+// UPDATE COURSE
 export const updateCourse = factory.updateOne(Course, 'course');
 
-//  DELETE COURSE
+// DELETE COURSE
 export const deleteCourse = factory.deleteOne(Course);
 
-//  PUBLISH / UNPUBLISH 
+// PUBLISH / UNPUBLISH
 export const publishCourse = catchAsync(async (req, res, next) => {
   req.course.isPublished = true;
   await req.course.save({ validateBeforeSave: false });
@@ -106,7 +106,7 @@ export const unpublishCourse = catchAsync(async (req, res, next) => {
   });
 });
 
-//  MY COURSES  (instructor)
+// MY COURSES  (instructor)
 export const getMyCourses = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(
     Course.find({ instructor: req.user.id }),
@@ -126,7 +126,7 @@ export const getMyCourses = catchAsync(async (req, res, next) => {
   });
 });
 
-//  COURSE STATS  (aggregation — admin/instructor)
+// COURSE STATS  (aggregation — admin/instructor)
 export const getCourseStats = catchAsync(async (req, res, next) => {
   const stats = await Course.aggregate([
     { $match: { isPublished: true } },
@@ -148,7 +148,7 @@ export const getCourseStats = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: 'success', data: { stats } });
 });
 
-//  ALIAS: TOP 5 COURSES
+// ALIAS: TOP 5 COURSES
 export const aliasTopCourses = (req, res, next) => {
   req.query.limit  = '5';
   req.query.sort   = '-ratingsAverage,-totalStudents';

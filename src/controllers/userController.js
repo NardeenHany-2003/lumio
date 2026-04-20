@@ -11,7 +11,9 @@ import AppError    from '../utils/appError.js';
 import * as factory from '../utils/handlerFactory.js';
 import { uploadUserPhoto } from '../middleware/uploadMiddleware.js';
 
+// ─────────────────────────────────────────────
 //  HELPER: filter request body to allowed fields only
+// ─────────────────────────────────────────────
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((key) => {
@@ -20,16 +22,24 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
+// ─────────────────────────────────────────────
 //  MIDDLEWARE: set req.params.id = logged-in user
+//  Lets /me routes reuse factory.getOne / factory.updateOne
+// ─────────────────────────────────────────────
 export const setMe = (req, res, next) => {
   req.params.id = req.user.id;
   next();
 };
 
+// ─────────────────────────────────────────────
 //  GET ME  — /api/v1/users/me
+// ─────────────────────────────────────────────
 export const getMe = factory.getOne(User, null, 'user');
 
+// ─────────────────────────────────────────────
 //  UPDATE ME  — /api/v1/users/update-me
+//  Only name, email, bio, photo — NOT password
+// ─────────────────────────────────────────────
 export const updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return next(
@@ -51,10 +61,7 @@ export const updateMe = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: 'success', data: { user: updatedUser } });
 });
 
-//  DELETE ME  — /api/v1/users/delete-me
-//  Students: soft-delete only (active = false)
-//  Instructors: soft-delete + hard-delete all
-//  their courses and every related document
+//  DELETE ME: Soft-delete
 export const deleteMe = catchAsync(async (req, res, next) => {
   // 1) Soft-delete the user account
   await User.findByIdAndUpdate(req.user.id, { active: false });
@@ -100,8 +107,9 @@ export const deleteMe = catchAsync(async (req, res, next) => {
   res.status(204).json({ status: 'success', data: null });
 });
 
+// ─────────────────────────────────────────────
 //  ADMIN — DO NOT UPDATE PASSWORDS WITH THESE
-export const getAllUsers  = factory.getAll(User, 'users');
-export const getUser      = factory.getOne(User, null, 'user');
-export const updateUser   = factory.updateOne(User, 'user');  // admin only — no password here
-export const deleteUser   = factory.deleteOne(User);
+export const getAllUsers = factory.getAll(User, 'users');
+export const getUser = factory.getOne(User, null, 'user');
+export const updateUser = factory.updateOne(User, 'user'); 
+export const deleteUser = factory.deleteOne(User);
